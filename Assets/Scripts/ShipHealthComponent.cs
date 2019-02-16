@@ -93,6 +93,11 @@ public class ShipHealthComponent : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public bool IsShieldOn()
+    {
+        return shieldOn;
+    }
+
     void Update()
     {
         if (shieldOn && energyComponent)
