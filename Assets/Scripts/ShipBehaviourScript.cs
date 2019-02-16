@@ -17,7 +17,7 @@ public class ShipBehaviourScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        moveDirection = new Vector3(0, Input.GetAxis("Vertical"), 0);
+        moveDirection = new Vector3(0, Mathf.Max(0.0f, Input.GetAxis("Vertical")), 0);
         moveDirection = transform.TransformDirection(moveDirection);
 
         transform.Rotate(0, 0, -Input.GetAxis("Horizontal") * rotateSpeed);
