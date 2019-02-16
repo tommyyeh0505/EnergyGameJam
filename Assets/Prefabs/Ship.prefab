@@ -152,6 +152,7 @@ GameObject:
   - component: {fileID: 1577079995700776958}
   - component: {fileID: 2292917158644954839}
   - component: {fileID: 1388088136499668249}
+  - component: {fileID: 2634429587872713998}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Player
@@ -211,7 +212,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 1fcf566cdf53b1549ab920f80aced84d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 95515084428a644d88098f354a94b20e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -272,7 +273,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4.21, y: 4.01}
+    oldSize: {x: 5.12, y: 5.12}
     newSize: {x: 4.21, y: 4.01}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -348,3 +349,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2634429587872713998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3614679745085772529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e121462fdd67947f98a3b6b163d74b8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefabBullet: {fileID: 3122367585333597168, guid: 0dcf121d6117c45b9b4d11e3ad3a1226,
+    type: 3}
+  bulletEnergyCost: 10

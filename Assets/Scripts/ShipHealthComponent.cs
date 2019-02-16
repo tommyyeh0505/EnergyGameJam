@@ -24,7 +24,7 @@ public class ShipHealthComponent : MonoBehaviour
 
     public void ToggleShieldOn()
     {
-        if (energyComponent && energyComponent.HasEnergy())
+        if (energyComponent && energyComponent.HasEnergyRemaining(shieldDrain))
         {
             shieldOn = true;
             shield = Instantiate(shieldPrefab, transform.position, Quaternion.identity);
@@ -51,14 +51,19 @@ public class ShipHealthComponent : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (shieldOn)
+        Debug.Log("Collided with " + collision.gameObject.tag);
+
+        if (collision.gameObject.tag != "OccupiesSpace")
         {
-            Bounce(collision);
-            //TODO: maybe kill thursters for 1 second after bounce for a disorientating effect
-        }
-        else
-        {
-            Die();
+            if (shieldOn)
+            {
+                Bounce(collision);
+                //TODO: maybe kill thursters for 1 second after bounce for a disorientating effect
+            }
+            else
+            {
+                Die();
+            }
         }
     }
 
@@ -103,7 +108,7 @@ public class ShipHealthComponent : MonoBehaviour
         if (shieldOn && energyComponent)
         {
             energyComponent.ReduceEnergy(shieldDrain * Time.deltaTime);
-            if (!energyComponent.HasEnergy())
+            if (!energyComponent.HasEnergyRemaining(0))
             {
                 ToggleShieldOff();
             }

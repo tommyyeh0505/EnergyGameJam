@@ -14,9 +14,9 @@ public class ShipEnergyComponent : MonoBehaviour
         GainEnergy(energyGain * Time.deltaTime);
     }
 
-    public bool HasEnergy()
+    public bool HasEnergyRemaining(float reduction)
     {
-        return energy > minEnergy;
+        return energy - reduction > minEnergy;
     }
 
     public void GainEnergy(float gain)
