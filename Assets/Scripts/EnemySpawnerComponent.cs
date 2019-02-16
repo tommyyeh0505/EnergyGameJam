@@ -61,7 +61,6 @@ public class EnemySpawnerComponent : MonoBehaviour
     public int SpawnEnemy(string EnemyType, Vector3 location)
     {   
         Instantiate(Enemies[0], location, Quaternion.identity);
-        NumEnemies++;
         return 0;
     }
     // Update is called once per frame
@@ -97,11 +96,6 @@ public class EnemySpawnerComponent : MonoBehaviour
         Debug.DrawLine(position, new Vector3(position.x, position.y + size, position.z), Color.red, Time.deltaTime);
         Debug.DrawLine(new Vector3(position.x, position.y + size, position.z), new Vector3(position.x + size, position.y + size, position.z), Color.red, Time.deltaTime);
         Debug.DrawLine(new Vector3(position.x + size, position.y + size, position.z), new Vector3(position.x + size, position.y, position.z), Color.red, Time.deltaTime);
-    }
-
-    public void EnemyDied()
-    {
-        NumEnemies = Mathf.Clamp(NumEnemies - 1, 0, MaxEnemiesOnMap);
     }
 
     public int RandomSpawn()
