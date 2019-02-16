@@ -28,4 +28,8 @@ public class ShipEnergyComponent : MonoBehaviour
     {
         energy = Mathf.Clamp(energy - reduction, minEnergy, maxEnergy);
     }
+
+    public void ResetEnergy() {
+        energy = maxEnergy;
+    }
 }

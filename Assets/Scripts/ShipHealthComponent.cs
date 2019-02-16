@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(ShipEnergyComponent))]
 public class ShipHealthComponent : MonoBehaviour
 {
-    [SerializeField] public float energyDrain = 10f;
+    [SerializeField] public float shieldDrain = 15f;
     ShipEnergyComponent energyComponent;
 
     public float destroyedRetainTimer = 4f;
@@ -85,7 +85,7 @@ public class ShipHealthComponent : MonoBehaviour
     {
         if (shieldOn && energyComponent)
         {
-            energyComponent.ReduceEnergy(energyDrain * Time.deltaTime);
+            energyComponent.ReduceEnergy(shieldDrain * Time.deltaTime);
             if (!energyComponent.HasEnergy())
             {
                 ToggleShieldOff();
