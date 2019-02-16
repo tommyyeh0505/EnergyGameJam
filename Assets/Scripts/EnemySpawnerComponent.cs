@@ -55,15 +55,22 @@ public class EnemySpawnerComponent : MonoBehaviour
     {
         entityPositions = new List<OccupiedSpace>();
         GameObject[] objects = GameObject.FindGameObjectsWithTag("OccupiesSpace");
-        Debug.Log("Number of Objects occupying space: " + objects.Length);
+        //Debug.Log("Number of Objects occupying space: " + objects.Length);
         for(int i = 0; i < objects.Length; i++)
         {
             Vector3 pos = objects[i].transform.position;
-            Debug.Log("Space occupied: " + pos.ToString());
+            //Debug.Log("Space occupied: " + pos.ToString());
             Vector3 bl = new Vector3(pos.x - LargestEnemyRadius, pos.y - LargestEnemyRadius, 0.0f);
             Vector3 tr = new Vector3(pos.x + LargestEnemyRadius, pos.y + LargestEnemyRadius, 0.0f);
             entityPositions.Add(new OccupiedSpace(bl, tr));
             DebugDrawColoredRectangle(bl, 2 * LargestEnemyRadius);
+        }
+
+        //Spawns Enemy
+        //TODO add timers and enemytypes
+        if(RandomSpawn() != 1)
+        {
+            Debug.Log("COLLISION, did not spawn");
         }
     }
 
@@ -101,7 +108,7 @@ public class EnemySpawnerComponent : MonoBehaviour
                 break;
         }
         Vector3 spawnpos = new Vector3(x, y, 0.0f);
-
+        Debug.Log("Spawning Enemies at position: " + spawnpos.ToString());
         return SpawnEnemy("BasicEnemy", spawnpos);
     }
 }
