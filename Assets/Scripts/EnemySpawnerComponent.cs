@@ -129,8 +129,8 @@ public class EnemySpawnerComponent : MonoBehaviour
             for (int i = 0; i < entityPositions.Count; i++)
             {
                 //if inside square, dont spawn
-                if (entityPositions[i].bottomleft.x < x && entityPositions[i].topright.x > x 
-                    && entityPositions[i].bottomleft.y < y && entityPositions[i].topright.y > y)
+                if (entityPositions[i].bottomleft.x - LargestEnemyRadius < x && entityPositions[i].topright.x + LargestEnemyRadius > x 
+                    && entityPositions[i].bottomleft.y - LargestEnemyRadius < y && entityPositions[i].topright.y + LargestEnemyRadius > y)
                 {
                     clear = false;
                 }
