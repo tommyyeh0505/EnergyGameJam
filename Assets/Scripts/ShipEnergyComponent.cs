@@ -8,10 +8,14 @@ public class ShipEnergyComponent : MonoBehaviour
     [SerializeField] public float energyGain = 1.0f;
     [SerializeField] public float maxEnergy = 100.0f;
     [SerializeField] public float minEnergy = 0.0f;
+    [SerializeField] public float rechargeThreshold = 25.0f;
 
     private void Update()
     {
-        GainEnergy(energyGain * Time.deltaTime);
+        if (energy < rechargeThreshold)
+        {
+            GainEnergy(energyGain * Time.deltaTime);
+        }
     }
 
     public bool HasEnergyRemaining(float reduction)
