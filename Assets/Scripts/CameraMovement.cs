@@ -7,8 +7,8 @@ public class CameraMovement : MonoBehaviour
     public float scrollSpeed = 1.0f;
     public float minScrollAmount = 0.0f;
     public float maxScrollAmount = 5.0f;
-    public float minZoom = 2.0f;
-    public float maxZoom = 10.0f;
+    public float minZoom = 5.0f;
+    public float maxZoom = 20.0f;
     // Start is called before the first frame update
     void Start()
     {

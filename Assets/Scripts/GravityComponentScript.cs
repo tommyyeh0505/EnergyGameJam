@@ -14,15 +14,21 @@ public class GravityComponentScript : MonoBehaviour
         }
     }
 
-    public void CalculateGravity(float strength, Vector3 gravityWellPosition)
+    private void OnDestroy()
     {
-        float r = Vector3.Distance(gravityWellPosition, this.transform.position);
-        float rsquared = r * r;
-        Vector2 dir = (gravityWellPosition - this.transform.position).normalized;
+        GravityFieldScript gravityManager = Camera.main.GetComponent<GravityFieldScript>();
+        if (gravityManager)
+        {
+            gravityManager.UnregisterAffected(this);
+        }
+    }
+
+    public void ApplyGravity(Vector2 force)
+    {
         Rigidbody2D body = GetComponent<Rigidbody2D>();
         if (body)
         {
-            body.AddForce(strength * body.mass * dir / rsquared);
+            body.AddForce(force * body.velocity.magnitude);
         }
     }
 }

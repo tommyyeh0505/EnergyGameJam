@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3614679745085772533}
   - component: {fileID: 3614679745085772534}
   - component: {fileID: 3614679745085772535}
+  - component: {fileID: 1577079995700776958}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Untagged
@@ -154,5 +155,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c4f52a5273cf8643864eef9b9aca18f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 300
+  thrust: 300
+  maxSpeed: 30
   rotateSpeed: 3
+--- !u!114 &1577079995700776958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3614679745085772529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c14d6c0678b64040b60e3baf24da7d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

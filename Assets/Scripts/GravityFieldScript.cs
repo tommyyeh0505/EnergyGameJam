@@ -23,6 +23,11 @@ public class GravityFieldScript : MonoBehaviour
         this.affected.Add(toRegister);
     }
 
+    public void UnregisterAffected(GravityComponentScript toUnregister)
+    {
+        this.affected.Remove(toUnregister);
+    }
+
     public List<GravityComponentScript> GetAffected()
     {
         return affected;
