@@ -27,10 +27,16 @@ public class EnemySpawnerComponent : MonoBehaviour
     private float[] SpawnBoundaries; //[Top, Bottom, Left, Right]
 
     [SerializeField] List<GameObject> Enemies;
+    [SerializeField] float EnemiesPerSecond;
+    [SerializeField] int MaxEnemiesOnMap;
+    [SerializeField] float EnemySpawnGrowthFactor;
+    [SerializeField] float SpawnBoundaryPadding; //How much padding around camera for enemy spawn
+    private List<OccupiedSpace> EntityPositions; //List of all entities that take up space (Bottom Left Corner, Top Right Corner)
+    [SerializeField] float LargestEntityRadius; //Largest used to eliminate risk of overlap
 
-    [SerializeField] float SpawnBoundaryPadding;
-    private List<OccupiedSpace> entityPositions;
-    [SerializeField] float LargestEnemyRadius;
+    //For Timing Enemy Spawn
+    private float nextActionTime = 0.0f;
+    [SerializeField] float period;
 
     // Start is called before the first frame update
     void Start()
@@ -60,29 +66,28 @@ public class EnemySpawnerComponent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        entityPositions = new List<OccupiedSpace>();
+        EntityPositions = new List<OccupiedSpace>();
         GameObject[] objects = GameObject.FindGameObjectsWithTag("OccupiesSpace");
         //Debug.Log("Number of Objects occupying space: " + objects.Length);
         for(int i = 0; i < objects.Length; i++)
         {
             Vector3 pos = objects[i].transform.position;
             //Debug.Log("Space occupied: " + pos.ToString());
-            Vector3 bl = new Vector3(pos.x - LargestEnemyRadius, pos.y - LargestEnemyRadius, 0.0f);
-            Vector3 tr = new Vector3(pos.x + LargestEnemyRadius, pos.y + LargestEnemyRadius, 0.0f);
-            entityPositions.Add(new OccupiedSpace(bl, tr));
-            DebugDrawColoredRectangle(bl, 2 * LargestEnemyRadius);
+            Vector3 bl = new Vector3(pos.x - LargestEntityRadius, pos.y - LargestEntityRadius, 0.0f);
+            Vector3 tr = new Vector3(pos.x + LargestEntityRadius, pos.y + LargestEntityRadius, 0.0f);
+            EntityPositions.Add(new OccupiedSpace(bl, tr));
+            DebugDrawColoredRectangle(bl, 2 * LargestEntityRadius);
         }
 
         //Spawns Enemy
         //TODO add timers and enemytypes
-        if (NumEnemies < 5)
+
+        if (Time.time > nextActionTime && NumEnemies < MaxEnemiesOnMap)
         {
-            NumEnemies++;
-            if (RandomSpawn() != 1)
-            {
-                Debug.Log("COLLISION, did not spawn");
-            }
+            nextActionTime += period;
+            RandomSpawn();
         }
+        
     }
 
     void DebugDrawColoredRectangle(Vector3 position, float size)
@@ -126,11 +131,11 @@ public class EnemySpawnerComponent : MonoBehaviour
             spawnpos = new Vector3(x, y, 0.0f);
             Debug.Log("Spawning Enemies at position: " + spawnpos.ToString());
 
-            for (int i = 0; i < entityPositions.Count; i++)
+            for (int i = 0; i < EntityPositions.Count; i++)
             {
                 //if inside square, dont spawn
-                if (entityPositions[i].bottomleft.x - LargestEnemyRadius < x && entityPositions[i].topright.x + LargestEnemyRadius > x 
-                    && entityPositions[i].bottomleft.y - LargestEnemyRadius < y && entityPositions[i].topright.y + LargestEnemyRadius > y)
+                if (EntityPositions[i].bottomleft.x - LargestEntityRadius < x && EntityPositions[i].topright.x + LargestEntityRadius > x 
+                    && EntityPositions[i].bottomleft.y - LargestEntityRadius < y && EntityPositions[i].topright.y + LargestEntityRadius > y)
                 {
                     clear = false;
                 }
