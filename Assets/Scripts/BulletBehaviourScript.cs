@@ -22,7 +22,10 @@ public class BulletBehaviourScript : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-        //TODO: use another way to identify enemies
+        if (col.gameObject.tag == "Player")
+        {
+            return;
+        }
         if (col.gameObject.tag == "Enemy")
         {
             //Reduce health of enemy
@@ -30,6 +33,5 @@ public class BulletBehaviourScript : MonoBehaviour
             Destroy(col.gameObject);
         }
         Destroy(gameObject);
-
     }
 }

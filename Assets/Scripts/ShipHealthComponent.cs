@@ -53,7 +53,7 @@ public class ShipHealthComponent : MonoBehaviour
     {
         Debug.Log("Collided with " + collision.gameObject.tag);
 
-        if (collision.gameObject.tag != "OccupiesSpace")
+        if (true) //collision.gameObject.tag != "OccupiesSpace") // why don't we want to die if we hit something that occupies space? 
         {
             if (shieldOn)
             {
@@ -62,7 +62,10 @@ public class ShipHealthComponent : MonoBehaviour
             }
             else
             {
-                Die();
+                if (collision.gameObject.tag != "PlayerBullet")
+                {
+                    Die();
+                }
             }
         }
     }

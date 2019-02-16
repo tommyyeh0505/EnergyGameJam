@@ -6,7 +6,7 @@ using UnityEngine;
 public class EnemyAIComponent : MonoBehaviour
 {
     public float impulse = 3f;
-    public float timeBetweenMoves = 1f;
+    public float timeBetweenMoves = 0.2f;
 
     private GameObject playerRef;
     private float lastMoveTime = 0f;
