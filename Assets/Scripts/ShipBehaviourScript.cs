@@ -34,5 +34,23 @@ public class ShipBehaviourScript : MonoBehaviour {
             transform.position = Vector3.zero;
             rgbd2d.velocity = Vector3.zero;
         }
-	}
+
+        if (Input.GetButtonDown("shield"))
+        {
+            ShipHealthComponent shield = GetComponent<ShipHealthComponent>();
+            if (shield)
+            {
+                shield.ToggleShield(true);
+            }
+        }
+
+        if (Input.GetButtonUp("shield"))
+        {
+            ShipHealthComponent shield = GetComponent<ShipHealthComponent>();
+            if (shield)
+            {
+                shield.ToggleShield(false);
+            }
+        }
+    }
 }

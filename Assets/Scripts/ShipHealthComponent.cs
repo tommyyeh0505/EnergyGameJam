@@ -4,16 +4,54 @@ using UnityEngine;
 
 public class ShipHealthComponent : MonoBehaviour
 {
-    float destroyedRetainTimer = 4f;
+    public float destroyedRetainTimer = 4f;
+    public GameObject shieldPrefab;
+    public float shieldBounciness = 80f;
+
+    private GameObject shield;
+    private bool shieldOn = false;
+
     // Start is called before the first frame update
     void Start()
     {
         
     }
 
+    public void ToggleShield(bool On)
+    {
+        shieldOn = On;
+        if (shieldOn)
+        {
+            shield = Instantiate(shieldPrefab, transform.position, Quaternion.identity);
+            shield.transform.parent = gameObject.transform;
+        }
+        else
+        {
+            Destroy(shield);
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Die();
+        if (shieldOn)
+        {
+            Bounce(collision);
+            //TODO: maybe kill thursters for 1 second after bounce for a disorientating effect
+        }
+        else
+        {
+            Die();
+        }
+    }
+
+    private void Bounce(Collision2D collision)
+    {
+        Rigidbody2D body = GetComponent<Rigidbody2D>();
+        if (body)
+        {
+            body.AddForce((body.position - (Vector2)collision.transform.position).normalized * body.velocity.magnitude * shieldBounciness);
+        }
+
     }
 
     private void Die()

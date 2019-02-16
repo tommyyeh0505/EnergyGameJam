@@ -170,3 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c14d6c0678b64040b60e3baf24da7d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyedRetainTimer: 4
+  shieldPrefab: {fileID: 8048014926160274428, guid: dab0d3beb5efa214cacbd3b7bd33e2b1,
+    type: 3}
+  shieldBounciness: 100
