@@ -88,27 +88,43 @@ public class EnemySpawnerComponent : MonoBehaviour
         int side = rnd.Next(1, 5);
         float x;
         float y;
-        switch (side)
+        Vector3 spawnpos;
+        bool clear;
+        do
         {
-            case 1: //top
-                x = Random.Range(SpawnBoundaries[2], SpawnBoundaries[3]);
-                y = SpawnBoundaries[0];
-                break;
-            case 2: //bottom
-                x = Random.Range(SpawnBoundaries[2], SpawnBoundaries[3]);
-                y = SpawnBoundaries[1];
-                break;
-            case 3: //left
-                x = SpawnBoundaries[2];
-                y = Random.Range(SpawnBoundaries[1], SpawnBoundaries[0]);
-                break;
-            default: //right
-                x = SpawnBoundaries[3];
-                y = Random.Range(SpawnBoundaries[1], SpawnBoundaries[0]);
-                break;
-        }
-        Vector3 spawnpos = new Vector3(x, y, 0.0f);
-        Debug.Log("Spawning Enemies at position: " + spawnpos.ToString());
+            clear = true;
+            switch (side)
+            {
+                case 1: //top
+                    x = Random.Range(SpawnBoundaries[2], SpawnBoundaries[3]);
+                    y = SpawnBoundaries[0];
+                    break;
+                case 2: //bottom
+                    x = Random.Range(SpawnBoundaries[2], SpawnBoundaries[3]);
+                    y = SpawnBoundaries[1];
+                    break;
+                case 3: //left
+                    x = SpawnBoundaries[2];
+                    y = Random.Range(SpawnBoundaries[1], SpawnBoundaries[0]);
+                    break;
+                default: //right
+                    x = SpawnBoundaries[3];
+                    y = Random.Range(SpawnBoundaries[1], SpawnBoundaries[0]);
+                    break;
+            }
+            spawnpos = new Vector3(x, y, 0.0f);
+            Debug.Log("Spawning Enemies at position: " + spawnpos.ToString());
+
+            for (int i = 0; i < entityPositions.Count; i++)
+            {
+                //if inside square, dont spawn
+                if (entityPositions[i].bottomleft.x < x && entityPositions[i].topright.x > x 
+                    && entityPositions[i].bottomleft.y < y && entityPositions[i].topright.y > y)
+                {
+                    clear = false;
+                }
+            }
+        } while (!clear);
         return SpawnEnemy("BasicEnemy", spawnpos);
     }
 }
