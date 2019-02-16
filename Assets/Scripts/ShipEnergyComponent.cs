@@ -2,37 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShipEnergyComponent : MonoBehaviour {
-    [SerializeField] public float energy = 100f;
+public class ShipEnergyComponent : MonoBehaviour
+{
+    [SerializeField] public float energy = 100.0f;
+    [SerializeField] public float energyGain = 1.0f;
+    [SerializeField] public float maxEnergy = 100.0f;
+    [SerializeField] public float minEnergy = 0.0f;
 
-    // Start is called before the first frame update
-    void Start() {
-
-    }
-
-    // Update is called once per frame
-    void Update() {
-
+    private void Update()
+    {
+        GainEnergy(energyGain * Time.deltaTime);
     }
 
     public bool HasEnergy()
     {
-        return (energy > 0);
+        return energy > minEnergy;
     }
 
-    public void ReduceEnergy(float reductionAmt)
+    public void GainEnergy(float gain)
     {
-        if (reductionAmt > 0)
-        {
-            if (energy > reductionAmt)
-            {
-                energy -= reductionAmt;
-            }
-            else
-            {
-                energy = 0;
-            }
-        }
-        
+        energy = Mathf.Clamp(energy + gain, minEnergy, maxEnergy);
+    }
+
+    public void ReduceEnergy(float reduction)
+    {
+        energy = Mathf.Clamp(energy - reduction, minEnergy, maxEnergy);
     }
 }
