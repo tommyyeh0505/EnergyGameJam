@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(ShipEnergyComponent))]
 public class RespawnShipScript : MonoBehaviour
 {
     public GameObject shipType;
-    private ShipEnergyComponent energyComponent;
 
     // Start is called before the first frame update
     void Start()
     {
-        energyComponent = GetComponent<ShipEnergyComponent>();
+        
     }
 
     // Update is called once per frame
@@ -24,7 +22,6 @@ public class RespawnShipScript : MonoBehaviour
             {
                 Instantiate(shipType, Vector3.zero, Quaternion.identity);
             }
-            energyComponent.ResetEnergy();
         }
     }
 }

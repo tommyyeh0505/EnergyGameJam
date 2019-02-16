@@ -4,12 +4,8 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collision2D))]
-[RequireComponent(typeof(ShipEnergyComponent))]
 public class ShipHealthComponent : MonoBehaviour
 {
-    [SerializeField] public float shieldDrain = 15f;
-    ShipEnergyComponent energyComponent;
-
     public float destroyedRetainTimer = 4f;
     public GameObject shieldPrefab;
     public float shieldBounciness = 80f;
@@ -17,25 +13,24 @@ public class ShipHealthComponent : MonoBehaviour
     private GameObject shield;
     private bool shieldOn = false;
 
+    // Start is called before the first frame update
     void Start()
     {
-        energyComponent = GetComponent<ShipEnergyComponent>();
+        
     }
 
-    public void ToggleShieldOn()
+    public void ToggleShield(bool On)
     {
-        if (energyComponent && energyComponent.HasEnergy())
+        shieldOn = On;
+        if (shieldOn)
         {
-            shieldOn = true;
             shield = Instantiate(shieldPrefab, transform.position, Quaternion.identity);
             shield.transform.parent = gameObject.transform;
         }
-    }
-
-    public void ToggleShieldOff()
-    {
-        shieldOn = false;
-        Destroy(shield);
+        else
+        {
+            Destroy(shield);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -62,11 +57,11 @@ public class ShipHealthComponent : MonoBehaviour
 
     private void Die()
     {
-        SpriteRenderer ren = GetComponent<SpriteRenderer>();
-        if (ren)
+        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        if (renderer)
         {
             // TODO: death anim
-            ren.color = Color.red;
+            renderer.color = Color.red;
         }
         Rigidbody2D body = GetComponent<Rigidbody2D>();
         if (body)
@@ -82,25 +77,17 @@ public class ShipHealthComponent : MonoBehaviour
         Destroy(gameObject);
     }
 
+    // Update is called once per frame
     void Update()
     {
-        if (shieldOn && energyComponent)
-        {
-            energyComponent.ReduceEnergy(shieldDrain * Time.deltaTime);
-            if (!energyComponent.HasEnergy())
-            {
-                ToggleShieldOff();
-            }
-        }
-
         if (Input.GetButtonDown("shield"))
         {
-            ToggleShieldOn();
+            ToggleShield(true);
         }
 
         if (Input.GetButtonUp("shield"))
         {
-            ToggleShieldOff();
+            ToggleShield(false);
         }
     }
 }
