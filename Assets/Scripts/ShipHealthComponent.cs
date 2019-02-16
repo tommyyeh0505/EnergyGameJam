@@ -77,6 +77,11 @@ public class ShipHealthComponent : MonoBehaviour
         Destroy(gameObject);
     }
 
+    public bool IsShieldOn()
+    {
+        return shieldOn;
+    }
+
     // Update is called once per frame
     void Update()
     {
