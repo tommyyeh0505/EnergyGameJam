@@ -6,6 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(Collision2D))]
 public class EnemyHealthComponent : MonoBehaviour
 {
+    private bool alreadyDead = false;
+
     float destroyedRetainTimer = 4f;
     // Start is called before the first frame update
     void Start()
@@ -21,7 +23,13 @@ public class EnemyHealthComponent : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag != "Player")
+        ShipHealthComponent shipHealth = collision.gameObject.GetComponent<ShipHealthComponent>();
+        if (shipHealth && !shipHealth.IsShieldOn())
+        {
+            return;
+        }
+
+        if (!alreadyDead)
         {
             Die();
         }
@@ -44,6 +52,13 @@ public class EnemyHealthComponent : MonoBehaviour
         EnemyAIComponent ai = GetComponent<EnemyAIComponent>();
         ai.enabled = false;
 
+        EnemySpawnerComponent spawner = Camera.main.GetComponent<EnemySpawnerComponent>();
+        if (spawner)
+        {
+            spawner.EnemyDied();
+        }
+
+        alreadyDead = true;
         StartCoroutine(DestroyTimer());
     }
 

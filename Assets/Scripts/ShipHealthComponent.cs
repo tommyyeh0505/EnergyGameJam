@@ -90,4 +90,9 @@ public class ShipHealthComponent : MonoBehaviour
             ToggleShield(false);
         }
     }
+
+    public bool IsShieldOn()
+    {
+        return shieldOn;
+    }
 }
