@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class EnemySpawnerComponent : MonoBehaviour
 {
+
     //Stores bottom left and top right corners of gameobject
     public struct OccupiedSpace
     {
@@ -23,6 +24,10 @@ public class EnemySpawnerComponent : MonoBehaviour
     private float CameraWidth;
     private float CameraHeight;
     private float[] SpawnBoundaries; //[Top, Bottom, Left, Right]
+
+    [SerializeField] GameObject basicEnemy;
+    [SerializeField] GameObject bossEnemy;
+
     [SerializeField] float SpawnBoundaryPadding;
     private List<OccupiedSpace> entityPositions;
     [SerializeField] float LargestEnemyRadius;
@@ -47,7 +52,8 @@ public class EnemySpawnerComponent : MonoBehaviour
     }
 
     public int SpawnEnemy(string EnemyType, Vector3 location)
-    {
+    {   
+        Instantiate(basicEnemy, location, Quaternion.identity);
         return 0;
     }
     // Update is called once per frame
