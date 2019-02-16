@@ -375,6 +375,11 @@ MonoBehaviour:
   maxScrollAmount: 5
   minZoom: 5
   maxZoom: 15
+  shakeCameraOffset: {x: 0, y: 0, z: -10}
+  isShaking: 0
+  shakeFreaquency: 1000
+  shakeAmount: 1
+  shakeDuration: 3
 --- !u!114 &1804915429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -401,6 +406,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea955770235b3db4d821f16a1dadb971, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Enemies:
+  - {fileID: 9178110893463130633, guid: 3c5425f1c95254f4f82a0a2c8c1380f2, type: 3}
   SpawnBoundaryPadding: 2
   LargestEnemyRadius: 2
 --- !u!1001 &3614679745869037456
