@@ -48,7 +48,7 @@ public class EnemySpawnerComponent : MonoBehaviour
 
     public int SpawnEnemy(string EnemyType, Vector3 location)
     {
-        
+        return 0;
     }
     // Update is called once per frame
     void Update()
