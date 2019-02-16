@@ -508,8 +508,64 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3614679745085772531, guid: 276304badd00ffa42878f0cb18fab489,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614679745085772531, guid: 276304badd00ffa42878f0cb18fab489,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614679745085772531, guid: 276304badd00ffa42878f0cb18fab489,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614679745085772530, guid: 276304badd00ffa42878f0cb18fab489,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 60f2c9fc183844437ba72b540f34c79d,
+        type: 3}
+    - target: {fileID: 3614679745085772534, guid: 276304badd00ffa42878f0cb18fab489,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 5.12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614679745085772534, guid: 276304badd00ffa42878f0cb18fab489,
+        type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 5.12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 276304badd00ffa42878f0cb18fab489, type: 3}
+--- !u!1 &3614679745869037457 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3614679745085772529, guid: 276304badd00ffa42878f0cb18fab489,
+    type: 3}
+  m_PrefabInstance: {fileID: 3614679745869037456}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &3614679745869037458
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3614679745869037457}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ac78b701b40f94a9292f94140cd16ef6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &9178110892111783881
 PrefabInstance:
   m_ObjectHideFlags: 0

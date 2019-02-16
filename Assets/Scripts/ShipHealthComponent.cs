@@ -29,6 +29,12 @@ public class ShipHealthComponent : MonoBehaviour
             shieldOn = true;
             shield = Instantiate(shieldPrefab, transform.position, Quaternion.identity);
             shield.transform.parent = gameObject.transform;
+
+            Animator animator = GetComponent<Animator>();
+            if (animator)
+            {
+                animator.SetBool("shield", true);
+            }
         }
     }
 
@@ -36,6 +42,11 @@ public class ShipHealthComponent : MonoBehaviour
     {
         shieldOn = false;
         Destroy(shield);
+        Animator animator = GetComponent<Animator>();
+        if (animator)
+        {
+            animator.SetBool("shield", false);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
