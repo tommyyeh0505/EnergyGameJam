@@ -51,14 +51,19 @@ public class ShipHealthComponent : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (shieldOn)
+        Debug.Log("Collided with " + collision.gameObject.tag);
+
+        if (collision.gameObject.tag != "OccupiesSpace")
         {
-            Bounce(collision);
-            //TODO: maybe kill thursters for 1 second after bounce for a disorientating effect
-        }
-        else
-        {
-            Die();
+            if (shieldOn)
+            {
+                Bounce(collision);
+                //TODO: maybe kill thursters for 1 second after bounce for a disorientating effect
+            }
+            else
+            {
+                Die();
+            }
         }
     }
 
