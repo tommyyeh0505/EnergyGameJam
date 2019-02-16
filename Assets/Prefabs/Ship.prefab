@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3614679745085772535}
   - component: {fileID: 1577079995700776958}
   - component: {fileID: 2292917158644954839}
+  - component: {fileID: 1388088136499668249}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Player
@@ -192,3 +193,22 @@ MonoBehaviour:
   energyGain: 1
   maxEnergy: 100
   minEnergy: 0
+--- !u!95 &1388088136499668249
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3614679745085772529}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ac78b701b40f94a9292f94140cd16ef6, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
