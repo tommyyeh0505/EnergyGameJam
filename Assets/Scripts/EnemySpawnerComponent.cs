@@ -23,10 +23,10 @@ public class EnemySpawnerComponent : MonoBehaviour
     private Vector3 CameraPos;
     private float CameraWidth;
     private float CameraHeight;
+    private int NumEnemies;
     private float[] SpawnBoundaries; //[Top, Bottom, Left, Right]
 
-    [SerializeField] GameObject basicEnemy;
-    [SerializeField] GameObject bossEnemy;
+    [SerializeField] List<GameObject> Enemies;
 
     [SerializeField] float SpawnBoundaryPadding;
     private List<OccupiedSpace> entityPositions;
@@ -35,6 +35,7 @@ public class EnemySpawnerComponent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        NumEnemies = 0;
         CameraPos = Camera.main.transform.position;
         float OrthSize = Camera.main.orthographicSize;
         CameraHeight = 2f * OrthSize;
@@ -53,7 +54,7 @@ public class EnemySpawnerComponent : MonoBehaviour
 
     public int SpawnEnemy(string EnemyType, Vector3 location)
     {   
-        Instantiate(basicEnemy, location, Quaternion.identity);
+        Instantiate(Enemies[0], location, Quaternion.identity);
         return 0;
     }
     // Update is called once per frame
@@ -74,9 +75,13 @@ public class EnemySpawnerComponent : MonoBehaviour
 
         //Spawns Enemy
         //TODO add timers and enemytypes
-        if(RandomSpawn() != 1)
+        if (NumEnemies < 5)
         {
-            Debug.Log("COLLISION, did not spawn");
+            NumEnemies++;
+            if (RandomSpawn() != 1)
+            {
+                Debug.Log("COLLISION, did not spawn");
+            }
         }
     }
 
