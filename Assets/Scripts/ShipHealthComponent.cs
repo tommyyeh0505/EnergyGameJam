@@ -2,8 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Collision2D))]
+[RequireComponent(typeof(ShipEnergyComponent))]
 public class ShipHealthComponent : MonoBehaviour
 {
+    [SerializeField] public float shieldDrain = 15f;
+    ShipEnergyComponent energyComponent;
+
     public float destroyedRetainTimer = 4f;
     public GameObject shieldPrefab;
     public float shieldBounciness = 80f;
@@ -11,24 +17,25 @@ public class ShipHealthComponent : MonoBehaviour
     private GameObject shield;
     private bool shieldOn = false;
 
-    // Start is called before the first frame update
     void Start()
     {
-        
+        energyComponent = GetComponent<ShipEnergyComponent>();
     }
 
-    public void ToggleShield(bool On)
+    public void ToggleShieldOn()
     {
-        shieldOn = On;
-        if (shieldOn)
+        if (energyComponent && energyComponent.HasEnergy())
         {
+            shieldOn = true;
             shield = Instantiate(shieldPrefab, transform.position, Quaternion.identity);
             shield.transform.parent = gameObject.transform;
         }
-        else
-        {
-            Destroy(shield);
-        }
+    }
+
+    public void ToggleShieldOff()
+    {
+        shieldOn = false;
+        Destroy(shield);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -51,16 +58,15 @@ public class ShipHealthComponent : MonoBehaviour
         {
             body.AddForce((body.position - (Vector2)collision.transform.position).normalized * body.velocity.magnitude * shieldBounciness);
         }
-
     }
 
     private void Die()
     {
-        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
-        if (renderer)
+        SpriteRenderer ren = GetComponent<SpriteRenderer>();
+        if (ren)
         {
             // TODO: death anim
-            renderer.color = Color.red;
+            ren.color = Color.red;
         }
         Rigidbody2D body = GetComponent<Rigidbody2D>();
         if (body)
@@ -76,17 +82,25 @@ public class ShipHealthComponent : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (shieldOn && energyComponent)
+        {
+            energyComponent.ReduceEnergy(shieldDrain * Time.deltaTime);
+            if (!energyComponent.HasEnergy())
+            {
+                ToggleShieldOff();
+            }
+        }
+
         if (Input.GetButtonDown("shield"))
         {
-            ToggleShield(true);
+            ToggleShieldOn();
         }
 
         if (Input.GetButtonUp("shield"))
         {
-            ToggleShield(false);
+            ToggleShieldOff();
         }
     }
 }
