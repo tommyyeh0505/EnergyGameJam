@@ -15,9 +15,10 @@ public class ShipBehaviourScript : MonoBehaviour {
 	void Start () {
         rgbd2d = GetComponent<Rigidbody2D>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
         moveDirection = new Vector3(0, Mathf.Max(0.0f, Input.GetAxis("Vertical")), 0);
         moveDirection = transform.TransformDirection(moveDirection);
 
@@ -33,24 +34,6 @@ public class ShipBehaviourScript : MonoBehaviour {
         {
             transform.position = Vector3.zero;
             rgbd2d.velocity = Vector3.zero;
-        }
-
-        if (Input.GetButtonDown("shield"))
-        {
-            ShipHealthComponent shield = GetComponent<ShipHealthComponent>();
-            if (shield)
-            {
-                shield.ToggleShield(true);
-            }
-        }
-
-        if (Input.GetButtonUp("shield"))
-        {
-            ShipHealthComponent shield = GetComponent<ShipHealthComponent>();
-            if (shield)
-            {
-                shield.ToggleShield(false);
-            }
         }
     }
 }

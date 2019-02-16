@@ -79,6 +79,14 @@ public class ShipHealthComponent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetButtonDown("shield"))
+        {
+            ToggleShield(true);
+        }
+
+        if (Input.GetButtonUp("shield"))
+        {
+            ToggleShield(false);
+        }
     }
 }
