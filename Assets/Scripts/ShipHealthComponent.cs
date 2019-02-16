@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Collision2D))]
 public class ShipHealthComponent : MonoBehaviour
 {
     public float destroyedRetainTimer = 4f;
@@ -51,7 +53,6 @@ public class ShipHealthComponent : MonoBehaviour
         {
             body.AddForce((body.position - (Vector2)collision.transform.position).normalized * body.velocity.magnitude * shieldBounciness);
         }
-
     }
 
     private void Die()
