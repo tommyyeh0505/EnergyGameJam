@@ -274,6 +274,7 @@ GameObject:
   - component: {fileID: 1804915427}
   - component: {fileID: 1804915428}
   - component: {fileID: 1804915429}
+  - component: {fileID: 1804915430}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -388,6 +389,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shipType: {fileID: 3614679745085772529, guid: 276304badd00ffa42878f0cb18fab489,
     type: 3}
+--- !u!114 &1804915430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804915423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea955770235b3db4d821f16a1dadb971, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpawnBoundaryPadding: 2
+  LargestEnemyRadius: 2
 --- !u!1001 &3614679745869037456
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -473,6 +488,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Planet
+      objectReference: {fileID: 0}
+    - target: {fileID: 9178110893463130633, guid: 3c5425f1c95254f4f82a0a2c8c1380f2,
+        type: 3}
+      propertyPath: m_TagString
+      value: OccupiesSpace
       objectReference: {fileID: 0}
     - target: {fileID: 9178110893463130635, guid: 3c5425f1c95254f4f82a0a2c8c1380f2,
         type: 3}
