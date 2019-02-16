@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3614679745085772534}
   - component: {fileID: 3614679745085772535}
   - component: {fileID: 1577079995700776958}
+  - component: {fileID: 2292917158644954839}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Player
@@ -170,7 +171,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c14d6c0678b64040b60e3baf24da7d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shieldDrain: 15
   destroyedRetainTimer: 4
   shieldPrefab: {fileID: 8048014926160274428, guid: dab0d3beb5efa214cacbd3b7bd33e2b1,
     type: 3}
   shieldBounciness: 100
+--- !u!114 &2292917158644954839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3614679745085772529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94b8a1cb847a73b4a80d1a21d078c98e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  energy: 100
+  energyGain: 1
+  maxEnergy: 100
+  minEnergy: 0

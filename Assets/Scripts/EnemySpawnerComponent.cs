@@ -33,7 +33,7 @@ public class EnemySpawnerComponent : MonoBehaviour
     [SerializeField] float SpawnBoundaryPadding; //How much padding around camera for enemy spawn
     private List<OccupiedSpace> EntityPositions; //List of all entities that take up space (Bottom Left Corner, Top Right Corner)
     [SerializeField] float LargestEntityRadius; //Largest used to eliminate risk of overlap
-
+    private float OrthSize;
     //For Timing Enemy Spawn
     private float nextActionTime = 0.0f;
     [SerializeField] float period;
@@ -42,14 +42,19 @@ public class EnemySpawnerComponent : MonoBehaviour
     void Start()
     {
         NumEnemies = 0;
-        CameraPos = Camera.main.transform.position;
-        float OrthSize = Camera.main.orthographicSize;
         CameraHeight = 2f * OrthSize;
         CameraWidth = Camera.main.aspect * OrthSize;
+        SpawnBoundaries = new float[4];
+        UpdateCamera();
+    }
+
+    private void UpdateCamera()
+    {
+        CameraPos = Camera.main.transform.position;
+        OrthSize = Camera.main.orthographicSize;
         //Debug.Log("CameraLocation: " + CameraPos.ToString());
         //Debug.Log("Height: " + CameraHeight);
         //Debug.Log("Width: " + CameraWidth);
-        SpawnBoundaries = new float[4];
         SpawnBoundaries[0] = CameraPos.y + OrthSize + SpawnBoundaryPadding;
         SpawnBoundaries[1] = 0f - OrthSize - SpawnBoundaryPadding;
         SpawnBoundaries[2] = 0f - (OrthSize * Camera.main.aspect) - SpawnBoundaryPadding;
@@ -85,6 +90,7 @@ public class EnemySpawnerComponent : MonoBehaviour
         if (Time.time > nextActionTime && NumEnemies < MaxEnemiesOnMap)
         {
             nextActionTime += period;
+            UpdateCamera();
             RandomSpawn();
         }
         
