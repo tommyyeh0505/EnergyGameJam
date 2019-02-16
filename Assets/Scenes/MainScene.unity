@@ -363,6 +363,7 @@ GameObject:
   - component: {fileID: 1804915425}
   - component: {fileID: 1804915424}
   - component: {fileID: 1804915427}
+  - component: {fileID: 1804915428}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -388,7 +389,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -446,6 +447,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e4e9c14d50264c0f920b94d948cbb2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1804915428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804915423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59e2f6c57a946d041abc43fda939e141, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scrollSpeed: 1
+  minScrollAmount: 1
+  maxScrollAmount: 5
+  minZoom: 2
+  maxZoom: 10
 --- !u!1001 &3614679745869037456
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -457,6 +475,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Ship
+      objectReference: {fileID: 0}
+    - target: {fileID: 3614679745085772529, guid: 276304badd00ffa42878f0cb18fab489,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 3614679745085772531, guid: 276304badd00ffa42878f0cb18fab489,
         type: 3}

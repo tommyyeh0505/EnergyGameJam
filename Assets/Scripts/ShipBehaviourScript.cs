@@ -25,7 +25,7 @@ public class ShipBehaviourScript : MonoBehaviour {
 
         if (Input.GetButtonDown("reset"))
         {
-            transform.position = new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 0.0f);
+            transform.position = Vector3.zero;
             rgbd2d.velocity = Vector3.zero;
         }
 	}
