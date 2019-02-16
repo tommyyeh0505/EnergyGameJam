@@ -7,12 +7,21 @@ public class CameraMovement : MonoBehaviour
     public float scrollSpeed = 1.0f;
     public float minScrollAmount = 0.0f;
     public float maxScrollAmount = 5.0f;
-    public float minZoom = 5.0f;
-    public float maxZoom = 20.0f;
+    public float minZoom = 2.0f;
+    public float maxZoom = 10.0f;
+
+    //public Vector3 cameraVelocity = new Vector3(0, 0, -10.0f);
+    public Vector3 shakeCameraOffset = new Vector3(0, 0, -10.0f);
+    public bool isShaking = false;
+    public int shakeFreaquency = 1000;
+    public float shakeAmount = 1f;
+    public float shakeDuration = 3f;
+    private float timeStartShake = 0f;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -30,7 +39,34 @@ public class CameraMovement : MonoBehaviour
         GameObject player = GameObject.FindWithTag("Player");
         if (player)
         {
-            Camera.main.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -10.0f);
+            // delay effect wtf is that jerking motion?
+            //cameraVelocity = (new Vector3(player.transform.position.x, player.transform.position.y, -10f)- Camera.main.transform.position);
+            //Camera.main.transform.position += cameraVelocity*Time.deltaTime;
+
+            Camera.main.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -10f);
         }
+
+        if (!isShaking)
+        {
+            float shakeTime = Time.time - timeStartShake;
+            if (shakeTime < shakeDuration)
+            {
+                float completion = (shakeTime - shakeDuration) / shakeDuration;
+                // calculate the offset of the camera
+                shakeCameraOffset = new Vector3(Mathf.PerlinNoise(Time.time * shakeFreaquency * completion, 0f) * shakeAmount * completion,
+                                                Mathf.PerlinNoise(0f, Time.time * shakeFreaquency * completion) * shakeAmount * completion, -10f);
+                Camera.main.transform.position += shakeCameraOffset;
+            }
+            else
+            {
+                isShaking = false;
+            }
+        }
+    }
+
+    void StartCameraShake(float duration)
+    {
+        timeStartShake = Time.time;
+        isShaking = true;
     }
 }
