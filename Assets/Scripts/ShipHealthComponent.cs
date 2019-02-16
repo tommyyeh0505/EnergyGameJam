@@ -24,7 +24,7 @@ public class ShipHealthComponent : MonoBehaviour
 
     public void ToggleShieldOn()
     {
-        if (energyComponent && energyComponent.HasEnergy())
+        if (energyComponent && energyComponent.HasEnergyRemaining(shieldDrain))
         {
             shieldOn = true;
             shield = Instantiate(shieldPrefab, transform.position, Quaternion.identity);
@@ -108,7 +108,7 @@ public class ShipHealthComponent : MonoBehaviour
         if (shieldOn && energyComponent)
         {
             energyComponent.ReduceEnergy(shieldDrain * Time.deltaTime);
-            if (!energyComponent.HasEnergy())
+            if (!energyComponent.HasEnergyRemaining(0))
             {
                 ToggleShieldOff();
             }

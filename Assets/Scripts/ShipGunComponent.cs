@@ -5,6 +5,7 @@ using UnityEngine;
 public class ShipGunComponent : MonoBehaviour
 {
     [SerializeField] public GameObject prefabBullet;
+    [SerializeField] public float bulletEnergyCost = 10.0f;
     private ShipEnergyComponent energyComponent;
     private Rigidbody2D body;
 
@@ -17,12 +18,13 @@ public class ShipGunComponent : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButton("shoot"))
+        if (Input.GetButton("shoot") && energyComponent && energyComponent.HasEnergyRemaining(bulletEnergyCost))
         {
             if (body)
             {
                 Instantiate(prefabBullet, body.GetRelativePoint(new Vector2(0, 0.5f)), transform.rotation);
             }
+            energyComponent.ReduceEnergy(bulletEnergyCost * Time.deltaTime);
         }
     }
 }
