@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(ShipEnergyComponent))]
 public class ShipHealthComponent : MonoBehaviour
 {
     public float destroyedRetainTimer = 4f;
@@ -19,16 +20,25 @@ public class ShipHealthComponent : MonoBehaviour
 
     public void ToggleShield(bool On)
     {
-        shieldOn = On;
-        if (shieldOn)
+        if (On)
         {
-            shield = Instantiate(shieldPrefab, transform.position, Quaternion.identity);
-            shield.transform.parent = gameObject.transform;
+            ShipEnergyComponent energyComponent = GetComponent<ShipEnergyComponent>();
+
+            if (energyComponent && energyComponent.HasEnergy())
+            {
+                shieldOn = On;
+                shield = Instantiate(shieldPrefab, transform.position, Quaternion.identity);
+                shield.transform.parent = gameObject.transform;
+            }
+            else {
+                return;
+            }
         }
         else
         {
             Destroy(shield);
         }
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -79,6 +89,13 @@ public class ShipHealthComponent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ShipEnergyComponent energyComponent = GetComponent<ShipEnergyComponent>();
+
+        // Energy reduction from shield
+        if (shieldOn && energyComponent) {
+            energyComponent.ReduceEnergy(10f * Time.deltaTime);
+        }
+
         if (Input.GetButtonDown("shield"))
         {
             ToggleShield(true);
