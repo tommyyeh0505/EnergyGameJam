@@ -42,11 +42,11 @@ public class EnemySpawnerComponent : MonoBehaviour
         SpawnBoundaries[1] = 0f - OrthSize - SpawnBoundaryPadding;
         SpawnBoundaries[2] = 0f - (OrthSize * Camera.main.aspect) - SpawnBoundaryPadding;
         SpawnBoundaries[3] = CameraPos.x + (OrthSize * Camera.main.aspect) + SpawnBoundaryPadding;
-        //Debug.DrawLine(new Vector3(SpawnBoundaries[2], SpawnBoundaries[1], 0), new Vector3(SpawnBoundaries[3], SpawnBoundaries[0], 0), Color.white, 10.0f);
+        Debug.DrawLine(new Vector3(SpawnBoundaries[2], SpawnBoundaries[1], 0), new Vector3(SpawnBoundaries[3], SpawnBoundaries[0], 0), Color.white, 10.0f);
 
     }
 
-    public void SpawnEnemy(string EnemyType, Vector3 location)
+    public int SpawnEnemy(string EnemyType, Vector3 location)
     {
         
     }
@@ -73,5 +73,35 @@ public class EnemySpawnerComponent : MonoBehaviour
         Debug.DrawLine(position, new Vector3(position.x, position.y + size, position.z), Color.red, Time.deltaTime);
         Debug.DrawLine(new Vector3(position.x, position.y + size, position.z), new Vector3(position.x + size, position.y + size, position.z), Color.red, Time.deltaTime);
         Debug.DrawLine(new Vector3(position.x + size, position.y + size, position.z), new Vector3(position.x + size, position.y, position.z), Color.red, Time.deltaTime);
+    }
+
+    public int RandomSpawn()
+    {
+        System.Random rnd = new System.Random();
+        int side = rnd.Next(1, 5);
+        float x;
+        float y;
+        switch (side)
+        {
+            case 1: //top
+                x = Random.Range(SpawnBoundaries[2], SpawnBoundaries[3]);
+                y = SpawnBoundaries[0];
+                break;
+            case 2: //bottom
+                x = Random.Range(SpawnBoundaries[2], SpawnBoundaries[3]);
+                y = SpawnBoundaries[1];
+                break;
+            case 3: //left
+                x = SpawnBoundaries[2];
+                y = Random.Range(SpawnBoundaries[1], SpawnBoundaries[0]);
+                break;
+            default: //right
+                x = SpawnBoundaries[3];
+                y = Random.Range(SpawnBoundaries[1], SpawnBoundaries[0]);
+                break;
+        }
+        Vector3 spawnpos = new Vector3(x, y, 0.0f);
+
+        return SpawnEnemy("BasicEnemy", spawnpos);
     }
 }
