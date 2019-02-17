@@ -31,7 +31,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.0041, y: 0.0042, z: -0.17047484}
   m_LocalScale: {x: 0.10142, y: 0.10142, z: 1.0142}
-  m_Children: []
+  m_Children:
+  - {fileID: 6594298578124557499}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -138,7 +139,6 @@ MonoBehaviour:
   ExplosionPrefab: {fileID: 6287483280433602336, guid: 43d012431276f4c42af81f36f4ffedcd,
     type: 3}
   energyPickupSpawnFrequency: 10
-  explosion: {fileID: 1358842293406397890}
   MutualCollisionKillSpeed: 5
   cameraShakeDurationOnKill: 0.1
   cameraShakeMagnitudeOnKill: 0.1
@@ -152,7 +152,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
