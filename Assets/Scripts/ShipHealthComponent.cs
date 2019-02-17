@@ -7,6 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(ShipEnergyComponent))]
 [RequireComponent(typeof(CircleCollider2D))]
 [RequireComponent(typeof(PolygonCollider2D))]
+[RequireComponent(typeof(AudioSource))]
 public class ShipHealthComponent : MonoBehaviour
 {
     [SerializeField] public float shieldDrain = 15f;
@@ -22,18 +23,18 @@ public class ShipHealthComponent : MonoBehaviour
 
     private GameObject shield;
     private bool shieldOn = false;
+    private bool dead = false;
 
     private CircleCollider2D CircleCollider;
     private PolygonCollider2D PolygonCollider;
 
+    [SerializeField] public AudioClip explodeAudio;
 
     void Start()
     {
-        
         energyComponent = GetComponent<ShipEnergyComponent>();
         CircleCollider = GetComponent<CircleCollider2D>();
         PolygonCollider = GetComponent<PolygonCollider2D>();
-
     }
 
     public void ToggleShieldOn()
@@ -51,6 +52,15 @@ public class ShipHealthComponent : MonoBehaviour
             {
                 animator.SetBool("shield", true);
             }
+        }
+    }
+
+    public void KilledEnemy()
+    {
+        ShipBehaviourScript behavior = GetComponent<ShipBehaviourScript>();
+        if (behavior)
+        {
+            behavior.SpeedBoost();
         }
     }
 
@@ -73,15 +83,23 @@ public class ShipHealthComponent : MonoBehaviour
         {
             return;
         }
-        if (collision.gameObject.tag == "Bullet" || collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Bullet")
         {
+            if (collision.gameObject.tag == "Enemy")
+            {
+                collision.gameObject.GetComponent<EnemyHealthComponent>().Die();
+                KilledEnemy();
+            }
             Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.tag == "Enemy")
+        {
+           collision.gameObject.GetComponent<EnemyHealthComponent>().Die();
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
         if (collision.gameObject.tag == "EnergyPickup")
         {
             return;
@@ -89,19 +107,26 @@ public class ShipHealthComponent : MonoBehaviour
 
         if (shieldOn)
         {
-            if (collision.gameObject.tag == "Bullet" || collision.gameObject.tag == "Enemy")
+            if (collision.gameObject.tag == "Bullet")
             {
                 Destroy(collision.gameObject);
-            } else
+            }
+            else if (collision.gameObject.tag == "Enemy")
+            {
+                collision.gameObject.GetComponent<EnemyHealthComponent>().Die();
+                KilledEnemy();
+            }
+            else
             {
                 Debug.Log("bounced");
                 Bounce(collision);
+                //}
+                //TODO: maybe kill thursters for 1 second after bounce for a disorientating effect
             }
-            //TODO: maybe kill thursters for 1 second after bounce for a disorientating effect
         }
         else
         {
-            if (collision.gameObject.tag != "PlayerBullet")
+            if (collision.gameObject.tag != "PlayerBullet" && !dead)
             {
                 Bounce(collision);
                 Die();
@@ -127,13 +152,27 @@ public class ShipHealthComponent : MonoBehaviour
     private void Die()
     {
         Debug.Log("DIE");
+        dead = true;
+        if (Camera.main)
+        {
+            CameraAudioScript mainAudio = Camera.main.GetComponent<CameraAudioScript>();
+            if (mainAudio)
+            {
+                mainAudio.Stop();
+            }
+        }
         SpriteRenderer ren = GetComponent<SpriteRenderer>();
         if (ren)
         {
             // TODO: death anim
             StartCoroutine(PlayExplosion());
-            Debug.Log("after exp");
+           // Debug.Log("after exp");
             ren.color = Color.red;
+        }
+        AudioSource audioSource = GetComponent<AudioSource>();
+        if (audioSource)
+        {
+            audioSource.PlayOneShot(explodeAudio, 1);
         }
         Rigidbody2D body = GetComponent<Rigidbody2D>();
         if (body)
@@ -157,8 +196,7 @@ public class ShipHealthComponent : MonoBehaviour
         {
             animator.SetTrigger("dying");
         }
-
-        GameObject.Find("GameUI").gameObject.SetActive(false);
+        GameObject.FindGameObjectsWithTag("GameUI")[0].SetActive(false);
         StartCoroutine(DestroyTimer());
     }
 

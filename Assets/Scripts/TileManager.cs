@@ -123,8 +123,17 @@ public class TileManager : MonoBehaviour
         Vector2 absPos = GetTileCentre(index) + offset;
 
         List<GameObject> nearbyTerrain = GetTerrainFromSurroundingTiles(index);
+        if (ship)
+        {
+            nearbyTerrain.Add(ship);
+        }
+
         bool isPosGood = true;
         int iterations = 0;
+
+        GameObject planetToSpawn = prefabs[random.Next(prefabs.Count)];
+        CircleCollider2D us = planetToSpawn.GetComponent<CircleCollider2D>();
+
         do
         {
             isPosGood = true;
@@ -134,9 +143,19 @@ public class TileManager : MonoBehaviour
                 // if we can't find a place for it after a while, just give up
                 return null;
             }
+
             foreach (GameObject sceneryObject in nearbyTerrain)
             {
-                if (Vector2.Distance(sceneryObject.transform.position, absPos) < minDistanceBetweenScenery)
+                float buffer = minDistanceBetweenScenery;
+                buffer += us.radius * us.gameObject.transform.localScale.x;
+
+                CircleCollider2D them = sceneryObject.GetComponent<CircleCollider2D>();
+                if (us && them)
+                {
+                    buffer += them.radius * them.gameObject.transform.localScale.x;
+                }
+
+                if (Vector2.Distance(sceneryObject.transform.position, absPos) < buffer)
                 {
                     isPosGood = false;
                 }
@@ -149,7 +168,7 @@ public class TileManager : MonoBehaviour
         } while (!isPosGood);
 
         int choice = random.Next(prefabs.Count);
-        return Instantiate(prefabs[choice], absPos, Quaternion.identity);
+        return Instantiate(planetToSpawn, absPos, Quaternion.identity);
     }
 
     private Vector2 GenerateRandomOffset(System.Random random, int maxX, int maxY)

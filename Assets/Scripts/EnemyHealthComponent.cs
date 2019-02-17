@@ -7,8 +7,9 @@ using UnityEngine;
 public class EnemyHealthComponent : MonoBehaviour
 {
     [SerializeField] public GameObject prefabEnergyPickup;
+    [SerializeField] public GameObject ExplosionPrefab;
+    [SerializeField] public int energyPickupSpawnFrequency;
     private bool alreadyDead = false;
-    public ParticleSystem explosion;
     public float MutualCollisionKillSpeed = 5f;
     
     public float cameraShakeDurationOnKill = 0.05f;
@@ -48,20 +49,17 @@ public class EnemyHealthComponent : MonoBehaviour
         }
         if (!alreadyDead)
         {
-            Instantiate(prefabEnergyPickup, gameObject.transform.position, Quaternion.identity);
+            if (shipHealth)
+            {
+                shipHealth.KilledEnemy();
+            }
             Die();
         }
     }
 
     public void Die()
     {
-        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
-        if (renderer)
-        {
-            // TODO: death anim
-            explosion.Play();
-            renderer.color = Color.clear;
-        }
+        Camera.main.GetComponent<ExplosionController>().ExplodeAtLocation(gameObject.transform.position);
         Rigidbody2D body = GetComponent<Rigidbody2D>();
         if (body)
         {
@@ -85,7 +83,13 @@ public class EnemyHealthComponent : MonoBehaviour
             camera.ShakeCamera(cameraShakeMagnitudeOnKill, cameraShakeDurationOnKill);
         }
 
-        StartCoroutine(DestroyTimer(explosion.duration));
+        StartCoroutine(DestroyTimer(0));
+
+        System.Random random = new System.Random();
+        if (random.Next(energyPickupSpawnFrequency) == 0)
+        {
+            Instantiate(prefabEnergyPickup, gameObject.transform.position, Quaternion.identity);
+        }
     }
 
     private IEnumerator DestroyTimer(float timer)

@@ -30,14 +30,17 @@ public class BulletBehaviourScript : MonoBehaviour
     {
         if (col.gameObject.tag == "Player" && hurtsPlayer)
         {
+            Destroy(gameObject);
+
             //Player Dies?
         }
         if (col.gameObject.tag == "Enemy" && hurtsEnemies)
         {
             //Reduce health of enemy
             //if enemy is dead, destroy
-            Destroy(col.gameObject);
+            col.gameObject.GetComponent<EnemyHealthComponent>().Die();
+            Destroy(gameObject);
+
         }
-        Destroy(gameObject);
     }
 }
