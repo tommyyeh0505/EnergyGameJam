@@ -1555,6 +1555,7 @@ GameObject:
   - component: {fileID: 1804915430}
   - component: {fileID: 1804915431}
   - component: {fileID: 1804915432}
+  - component: {fileID: 1804915433}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1740,6 +1741,20 @@ MonoBehaviour:
   minDistanceBetweenScenery: 25
   minTerrainPerTile: 1
   maxTerrainPerTile: 2
+--- !u!114 &1804915433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1804915423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d38fbf315196fdb43aa539f461a06ca3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ExplosionPrefab: {fileID: 6287483280433602336, guid: 43d012431276f4c42af81f36f4ffedcd,
+    type: 3}
 --- !u!1 &1873984082
 GameObject:
   m_ObjectHideFlags: 0

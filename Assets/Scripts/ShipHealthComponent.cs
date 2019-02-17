@@ -74,9 +74,13 @@ public class ShipHealthComponent : MonoBehaviour
         {
             return;
         }
-        if (collision.gameObject.tag == "Bullet" || collision.gameObject.tag == "Enemy")
+        if (collision.gameObject.tag == "Bullet")
         {
             Destroy(collision.gameObject);
+        }
+        if (collision.gameObject.tag == "Enemy")
+        {
+           collision.gameObject.GetComponent<EnemyHealthComponent>().Die();
         }
     }
 
@@ -90,18 +94,20 @@ public class ShipHealthComponent : MonoBehaviour
 
         if (shieldOn)
         {
-            if (collision.gameObject.tag == "Bullet")
-            {
-                Destroy(collision.gameObject);
-            } else if (collision.gameObject.tag == "Enemy")
-            {
-                collision.gameObject.GetComponent<EnemyHealthComponent>().Die();
-            }
-            else
-            {
-                Debug.Log("bounced");
+            //Shouldnt ever run this because trigger2D is bigger and wont call this method.
+            //if (collision.gameObject.tag == "Bullet")
+            //{
+            //    Destroy(collision.gameObject);
+            //} else if (collision.gameObject.tag == "Enemy")
+            //{
+            //    Debug.Log("explode enemy");
+            //    collision.gameObject.GetComponent<EnemyHealthComponent>().Die();
+            //}
+            //else
+            //{
+                //Debug.Log("bounced");
                 Bounce(collision);
-            }
+            //}
             //TODO: maybe kill thursters for 1 second after bounce for a disorientating effect
         }
         else
@@ -138,7 +144,7 @@ public class ShipHealthComponent : MonoBehaviour
         {
             // TODO: death anim
             StartCoroutine(PlayExplosion());
-            Debug.Log("after exp");
+           // Debug.Log("after exp");
             ren.color = Color.red;
         }
         Rigidbody2D body = GetComponent<Rigidbody2D>();

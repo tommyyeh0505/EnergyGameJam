@@ -7,8 +7,8 @@ using UnityEngine;
 public class EnemyHealthComponent : MonoBehaviour
 {
     [SerializeField] public GameObject prefabEnergyPickup;
+    [SerializeField] public GameObject ExplosionPrefab;
     private bool alreadyDead = false;
-    public ParticleSystem explosion;
     public float MutualCollisionKillSpeed = 5f;
     
     public float cameraShakeDurationOnKill = 0.05f;
@@ -55,14 +55,7 @@ public class EnemyHealthComponent : MonoBehaviour
 
     public void Die()
     {
-        SpriteRenderer renderer = GetComponent<SpriteRenderer>();
-        if (renderer)
-        {
-            Debug.Log("explode");
-            // TODO: death anim
-            explosion.Play();
-            renderer.color = Color.clear;
-        }
+        Camera.main.GetComponent<ExplosionController>().ExplodeAtLocation(gameObject.transform.position);
         Rigidbody2D body = GetComponent<Rigidbody2D>();
         if (body)
         {
@@ -85,8 +78,7 @@ public class EnemyHealthComponent : MonoBehaviour
         {
             camera.ShakeCamera(cameraShakeMagnitudeOnKill, cameraShakeDurationOnKill);
         }
-
-        StartCoroutine(DestroyTimer(explosion.duration));
+        StartCoroutine(DestroyTimer(0));
     }
 
     private IEnumerator DestroyTimer(float timer)
