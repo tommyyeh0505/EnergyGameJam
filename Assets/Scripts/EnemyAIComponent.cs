@@ -72,6 +72,10 @@ public class EnemyAIComponent : MonoBehaviour
             Rigidbody2D rigid2D = GetComponent<Rigidbody2D>();
             if (rigid2D)
             {
+                Vector2 movementDir = (intermediatePos - (Vector2) transform.position).normalized;
+                float ang = Vector2.SignedAngle(Vector2.up, movementDir);
+                transform.rotation = Quaternion.Euler(0, 0, ang);
+
                 rigid2D.MovePosition(intermediatePos);
             }
 
@@ -87,7 +91,8 @@ public class EnemyAIComponent : MonoBehaviour
 
         Vector2 moveDir = (targetPos - (Vector2)transform.position).normalized;
         float distance = speed * Time.deltaTime;
-        transform.rotation = Quaternion.Euler(0, 0, Vector2.Angle(Vector2.up, moveDir));
+        float ang = Vector2.SignedAngle(Vector2.up, moveDir);
+        transform.rotation = Quaternion.Euler(0, 0, ang);
         rigid2D.MovePosition((Vector2) transform.position + moveDir * distance);
     }
 }
