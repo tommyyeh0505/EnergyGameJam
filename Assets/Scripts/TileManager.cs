@@ -6,13 +6,6 @@ using TileIndex = System.Tuple<int, int>;
 
 public class TileManager : MonoBehaviour
 {
-    [SerializeField] public GameObject prefabMars;
-    [SerializeField] public GameObject prefabMercury;
-    [SerializeField] public GameObject prefabNeptune;
-    [SerializeField] public GameObject prefabOrangee;
-    [SerializeField] public GameObject prefabUranus;
-    [SerializeField] public GameObject prefabWorstPlanet;
-    [SerializeField] public GameObject prefabRedSun;
     [SerializeField] public GameObject prefabTile;
     private static readonly float TILE_WIDTH = 50.0f;
     private static readonly float TILE_HEIGHT = 30.0f;
@@ -47,16 +40,20 @@ public class TileManager : MonoBehaviour
 
     private void GenerateSurroundingTiles(TileIndex index)
     {
+        // System.Random works on the scale of the system clock so any tiles
+        // created in this loop would get the same pseudorandom sequence
+        // if they didn't share the same Random instance
+        System.Random random = new System.Random();
         for (int i = -1; i <= 1; i++)
         {
             for (int j = -1; j <= 1; j++)
             {
-                GenerateTileIfNotExists(new TileIndex(index.Item1 + i, index.Item2 + j));
+                GenerateTileIfNotExists(new TileIndex(index.Item1 + i, index.Item2 + j), random);
             }
         }
     }
 
-    private void GenerateTileIfNotExists(TileIndex index)
+    private void GenerateTileIfNotExists(TileIndex index, System.Random random)
     {
         if (!tiles.ContainsKey(index))
         {
@@ -65,8 +62,8 @@ public class TileManager : MonoBehaviour
             TileBehaviourComponent tileBehaviour = tile.GetComponent<TileBehaviourComponent>();
             if (tileBehaviour)
             {
+                tileBehaviour.GenerateTerrain(random, TILE_WIDTH, TILE_HEIGHT);
                 tiles.Add(index, tileBehaviour);
-                Debug.Log("Added tile at " + index);
             }
         }
     }
