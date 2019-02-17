@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   energyGain: 10
-  attractDistance: 50
+  attractDistance: 20
   attractSpeed: 30
 --- !u!58 &3505863974619630581
 CircleCollider2D:

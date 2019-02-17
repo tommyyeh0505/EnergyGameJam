@@ -6,6 +6,8 @@ using UnityEngine;
 public class SunBehaviourScript : MonoBehaviour
 {
     [SerializeField] public float energyGain;
+    public GameObject energyCubePrefab;
+    public float energySpawnVariance = 5f;
     private OrbitalForceComponent orbitComponent;
     private GameObject ship;
 
@@ -22,11 +24,7 @@ public class SunBehaviourScript : MonoBehaviour
             float distance = Vector2.Distance(orbitComponent.transform.position, ship.transform.position);
             if (orbitComponent.IsInOrbit(distance))
             {
-                ShipEnergyComponent shipEnergy = ship.GetComponent<ShipEnergyComponent>();
-                if (shipEnergy)
-                {
-                    shipEnergy.GainEnergy(energyGain * Time.deltaTime); 
-                }
+                Instantiate(energyCubePrefab, (Vector2) transform.position + Random.insideUnitCircle * energySpawnVariance, Quaternion.identity);
             }
         }
     }

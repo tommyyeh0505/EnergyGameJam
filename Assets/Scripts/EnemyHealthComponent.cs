@@ -8,6 +8,7 @@ public class EnemyHealthComponent : MonoBehaviour
 {
     [SerializeField] public GameObject prefabEnergyPickup;
     [SerializeField] public GameObject ExplosionPrefab;
+    [SerializeField] public int energyPickupSpawnFrequency;
     private bool alreadyDead = false;
     public float MutualCollisionKillSpeed = 5f;
     
@@ -52,7 +53,6 @@ public class EnemyHealthComponent : MonoBehaviour
             {
                 shipHealth.KilledEnemy();
             }
-            Instantiate(prefabEnergyPickup, gameObject.transform.position, Quaternion.identity);
             Die();
         }
     }
@@ -82,7 +82,14 @@ public class EnemyHealthComponent : MonoBehaviour
         {
             camera.ShakeCamera(cameraShakeMagnitudeOnKill, cameraShakeDurationOnKill);
         }
+
         StartCoroutine(DestroyTimer(0));
+
+        System.Random random = new System.Random();
+        if (random.Next(energyPickupSpawnFrequency) == 0)
+        {
+            Instantiate(prefabEnergyPickup, gameObject.transform.position, Quaternion.identity);
+        }
     }
 
     private IEnumerator DestroyTimer(float timer)
