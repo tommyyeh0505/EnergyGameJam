@@ -11,6 +11,7 @@ public class ShipBehaviourScript : MonoBehaviour {
     public float rotateSpeed = 0.1f;   // degrees per second
     public float rotationDragFactor = 0.5f;
     public float decelerationWeight = 2f;
+    [SerializeField] public Vector2 velocity;
 
     private Vector3 moveDirection = Vector3.zero;
     private Rigidbody2D rgbd2d;
@@ -24,6 +25,7 @@ public class ShipBehaviourScript : MonoBehaviour {
     private bool currentlyOrbiting = false;
     private bool orbitClockWise = false;
     private bool alreadyDead = false;
+
 
     void Start () {
         rgbd2d = GetComponent<Rigidbody2D>();
@@ -81,6 +83,7 @@ public class ShipBehaviourScript : MonoBehaviour {
             orientation *= Quaternion.Euler(0, 0, (orbitClockWise ? -1 : 1) * Mathf.LerpAngle(0, Vector2.Angle(dirToObject, orbitalOrientation), rotationDragFactor));
             orbitalOrientation = dirToObject;
         }
+        velocity = rgbd2d.velocity;
 
         transform.rotation = orientation * currentDirection;
     }

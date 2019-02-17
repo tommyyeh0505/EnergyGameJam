@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collision2D))]
 [RequireComponent(typeof(ShipEnergyComponent))]
+[RequireComponent(typeof(CircleCollider2D))]
+[RequireComponent(typeof(PolygonCollider2D))]
 public class ShipHealthComponent : MonoBehaviour
 {
     [SerializeField] public float shieldDrain = 15f;
@@ -21,10 +23,17 @@ public class ShipHealthComponent : MonoBehaviour
     private GameObject shield;
     private bool shieldOn = false;
 
+    private CircleCollider2D CircleCollider;
+    private PolygonCollider2D PolygonCollider;
+
+
     void Start()
     {
         
         energyComponent = GetComponent<ShipEnergyComponent>();
+        CircleCollider = GetComponent<CircleCollider2D>();
+        PolygonCollider = GetComponent<PolygonCollider2D>();
+
     }
 
     public void ToggleShieldOn()
@@ -32,6 +41,8 @@ public class ShipHealthComponent : MonoBehaviour
         if (energyComponent && energyComponent.HasEnergyRemaining(0))
         {
             shieldOn = true;
+            Debug.Log("CircleCollider Active");
+            CircleCollider.enabled = true;
             shield = Instantiate(shieldPrefab, transform.position, Quaternion.identity);
             shield.transform.parent = gameObject.transform;
 
@@ -45,12 +56,27 @@ public class ShipHealthComponent : MonoBehaviour
 
     public void ToggleShieldOff()
     {
+        Debug.Log("PolygonCollider Active");
+        CircleCollider.enabled = false;
         shieldOn = false;
         Destroy(shield);
         Animator animator = GetComponent<Animator>();
         if (animator)
         {
             animator.SetBool("shield", false);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "EnergyPickup")
+        {
+            return;
+        }
+        if (collision.gameObject.tag == "Bullet" || collision.gameObject.tag == "Enemy")
+        {
+            Destroy(collision.gameObject);
+            Debug.Log("Destroying " + collision.gameObject.tag);
         }
     }
 
@@ -65,8 +91,13 @@ public class ShipHealthComponent : MonoBehaviour
 
         if (shieldOn)
         {
-            if (collision.gameObject.tag != "Enemy")
+            if (collision.gameObject.tag == "Bullet" || collision.gameObject.tag == "Enemy")
             {
+                Destroy(collision.gameObject);
+                Debug.Log("Destroying " + collision.gameObject.tag);
+            } else
+            {
+                Debug.Log("bounced");
                 Bounce(collision);
             }
             //TODO: maybe kill thursters for 1 second after bounce for a disorientating effect

@@ -5,29 +5,31 @@ using UnityEngine;
 public class BulletBehaviourScript : MonoBehaviour
 {
     private Rigidbody2D body;
-    public bool hurtsEnemies = true;
-    public bool hurtsPlayer = true;
+    [SerializeField] public bool hurtsEnemies;
+    [SerializeField] public bool hurtsPlayer;
     public float bulletSpeed = 0.5f;
+    private float shipVelocity;
+    private ShipBehaviourScript ship;
+    private readonly float lifetime = 1.0f;
+
 
     void Start()
     {
-        body = GetComponent<Rigidbody2D>();
+        GameObject[] go = GameObject.FindGameObjectsWithTag("Player");
+        ship = go[0].GetComponent<ShipBehaviourScript>();
     }
 
     void Update()
     {
-        if (body)
-        {
-            body.MovePosition(body.GetRelativePoint(new Vector2(0, bulletSpeed)));
-        }
+        gameObject.transform.Translate(0f, 0.5f + Mathf.Abs(shipVelocity), 0f);
+        Destroy(gameObject, lifetime);
 
     }
 
-    void OnTriggerEnter(Collider col)
+    void OnCollisionEnter2D(Collision2D col)
     {
         if (col.gameObject.tag == "Player" && hurtsPlayer)
         {
-            return;
         }
         if (col.gameObject.tag == "Enemy" && hurtsEnemies)
         {
