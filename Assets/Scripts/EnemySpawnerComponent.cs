@@ -60,7 +60,7 @@ public class EnemySpawnerComponent : MonoBehaviour
         SpawnBoundaries[1] = CameraPos.y - OrthSize - SpawnBoundaryPadding;
         SpawnBoundaries[2] = CameraPos.x - (OrthSize * Camera.main.aspect) - SpawnBoundaryPadding;
         SpawnBoundaries[3] = CameraPos.x + (OrthSize * Camera.main.aspect) + SpawnBoundaryPadding;
-        Debug.DrawLine(new Vector3(SpawnBoundaries[2], SpawnBoundaries[1], 0), new Vector3(SpawnBoundaries[3], SpawnBoundaries[0], 0), Color.white, 10.0f);
+        //Debug.DrawLine(new Vector3(SpawnBoundaries[2], SpawnBoundaries[1], 0), new Vector3(SpawnBoundaries[3], SpawnBoundaries[0], 0), Color.white, 10.0f);
     }
 
     public int SpawnEnemy(string EnemyType, Vector3 location)
@@ -82,7 +82,7 @@ public class EnemySpawnerComponent : MonoBehaviour
             Vector3 bl = new Vector3(pos.x - LargestEntityRadius, pos.y - LargestEntityRadius, 0.0f);
             Vector3 tr = new Vector3(pos.x + LargestEntityRadius, pos.y + LargestEntityRadius, 0.0f);
             EntityPositions.Add(new OccupiedSpace(bl, tr));
-            DebugDrawColoredRectangle(bl, 2 * LargestEntityRadius);
+            //DebugDrawColoredRectangle(bl, 2 * LargestEntityRadius);
         }
 
         //Spawns Enemy
@@ -140,7 +140,7 @@ public class EnemySpawnerComponent : MonoBehaviour
                     break;
             }
             spawnpos = new Vector3(x, y, 0.0f);
-            Debug.Log("Spawning Enemies at position: " + spawnpos.ToString());
+            //Debug.Log("Spawning Enemies at position: " + spawnpos.ToString());
 
             for (int i = 0; i < EntityPositions.Count; i++)
             {

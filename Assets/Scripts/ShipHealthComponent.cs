@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Collision2D))]
 [RequireComponent(typeof(ShipEnergyComponent))]
+[RequireComponent(typeof(CircleCollider2D))]
+[RequireComponent(typeof(PolygonCollider2D))]
 public class ShipHealthComponent : MonoBehaviour
 {
     [SerializeField] public float shieldDrain = 15f;
@@ -21,10 +23,17 @@ public class ShipHealthComponent : MonoBehaviour
     private GameObject shield;
     private bool shieldOn = false;
 
+    private CircleCollider2D CircleCollider;
+    private PolygonCollider2D PolygonCollider;
+
+
     void Start()
     {
         
         energyComponent = GetComponent<ShipEnergyComponent>();
+        CircleCollider = GetComponent<CircleCollider2D>();
+        PolygonCollider = GetComponent<PolygonCollider2D>();
+
     }
 
     public void ToggleShieldOn()
@@ -32,6 +41,9 @@ public class ShipHealthComponent : MonoBehaviour
         if (energyComponent && energyComponent.HasEnergyRemaining(0))
         {
             shieldOn = true;
+            Debug.Log("CircleCollider Active");
+            PolygonCollider.gameObject.SetActive(false);
+            CircleCollider.gameObject.SetActive(true);
             shield = Instantiate(shieldPrefab, transform.position, Quaternion.identity);
             shield.transform.parent = gameObject.transform;
 
@@ -45,6 +57,9 @@ public class ShipHealthComponent : MonoBehaviour
 
     public void ToggleShieldOff()
     {
+        Debug.Log("PolygonCollider Active");
+        CircleCollider.gameObject.SetActive(false);
+        PolygonCollider.gameObject.SetActive(true);
         shieldOn = false;
         Destroy(shield);
         Animator animator = GetComponent<Animator>();
@@ -65,7 +80,10 @@ public class ShipHealthComponent : MonoBehaviour
 
         if (shieldOn)
         {
-            if (collision.gameObject.tag != "Enemy")
+            if (collision.gameObject.tag == "Bullet" || collision.gameObject.tag == "Enemy")
+            {
+                Destroy(collision.gameObject);
+            } else
             {
                 Bounce(collision);
             }
