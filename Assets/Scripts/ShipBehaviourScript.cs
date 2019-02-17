@@ -9,16 +9,20 @@ public class ShipBehaviourScript : MonoBehaviour {
 	public float thrust = 300f;
     public float maxSpeed = 30f;
     public float rotateSpeed = 0.1f;   // degrees per second
+    public float rotationDragFactor = 0.5f;
     private Vector3 moveDirection = Vector3.zero;
     private Rigidbody2D rgbd2d;
     private ShipEnergyComponent energyComponent;
     private float thrustDrain = 5f;
     private Quaternion orientation;
     private Quaternion currentDirection;
+
+    private Vector2 orbitalOrientation;
     private OrbitalForceComponent orbitRef;
     private bool currentlyOrbiting = false;
+    private bool orbitClockWise = false;
 
-	void Start () {
+    void Start () {
         rgbd2d = GetComponent<Rigidbody2D>();
         energyComponent = GetComponent<ShipEnergyComponent>();
         orientation = Quaternion.identity;
@@ -48,6 +52,30 @@ public class ShipBehaviourScript : MonoBehaviour {
             transform.position = Vector3.zero;
             rgbd2d.velocity = Vector3.zero;
             energyComponent.ResetEnergy();
+        }
+
+        if (currentlyOrbiting)
+        {
+            Vector2 difference = orbitRef.transform.position - transform.position;
+            if (orbitRef.orbitalDistance < difference.magnitude)
+            {
+                currentlyOrbiting = false;
+            }       
+
+            Vector2 dirToObject = (orbitRef.transform.position - transform.position).normalized;
+            orientation *= Quaternion.Euler(0, 0, (orbitClockWise ? -1 : 1) * Mathf.LerpAngle(0, Vector2.Angle(dirToObject, orbitalOrientation), rotationDragFactor));
+            orbitalOrientation = dirToObject;
+        }
+    }
+
+    public void StartOrbit(bool clockWise, OrbitalForceComponent orbital)
+    {
+        if (currentlyOrbiting == false)
+        {
+            orbitRef = orbital;
+            orbitalOrientation = (orbitRef.transform.position - transform.position).normalized;
+            currentlyOrbiting = true;
+            orbitClockWise = clockWise;
         }
     }
 }

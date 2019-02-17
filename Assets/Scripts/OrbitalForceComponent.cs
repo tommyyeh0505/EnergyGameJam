@@ -6,7 +6,7 @@ using UnityEngine;
 public class OrbitalForceComponent : MonoBehaviour
 {
     public float orbitalDistance = 5.0f;
-    public float orbitalNudgeStrength = 2.0f;
+    public float orbitalNudgeStrength = 1.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +30,7 @@ public class OrbitalForceComponent : MonoBehaviour
         Vector2 incidentDir = (transform.position - gravComponent.transform.position).normalized;
         Vector2 perpendicular = Vector2.Perpendicular(incidentDir);
 
+        bool clockWise = true;
         Rigidbody2D objectBody = gravComponent.GetComponent<Rigidbody2D>();
         if (objectBody)
         {
@@ -37,17 +38,17 @@ public class OrbitalForceComponent : MonoBehaviour
             if ((projection - perpendicular).magnitude > projection.magnitude)
             {
                 perpendicular = -perpendicular;
+                clockWise = false;
             }
         }
 
-        gravComponent.ApplyGravity((perpendicular * orbitalNudgeStrength) + force);
+        gravComponent.ApplyGravity(((perpendicular * force.magnitude * orbitalNudgeStrength) + force).normalized * force.magnitude);
 
-        //TODO: wap?
-        //ShipBehaviourScript behavior = gravComponent.GetComponent<ShipBehaviourScript>();
-        //if (behavior)
-        //{
-        //    float angle = Vector2.Angle(Vector2.right, perpendicular);
-        //    behavior.StartOrbit(this);
-        //}
+        ShipBehaviourScript behavior = gravComponent.GetComponent<ShipBehaviourScript>();
+        if (behavior)
+        {
+            float angle = Vector2.Angle(Vector2.right, perpendicular);
+            behavior.StartOrbit(clockWise, this);
+        }
     }
 }
