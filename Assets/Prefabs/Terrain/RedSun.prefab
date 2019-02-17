@@ -96,8 +96,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e07e5a7e38dbe4242b3b2f68a88d7689, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  strength: 5
-  effectiveRange: 100
+  strength: 3
+  effectiveRange: 50
 --- !u!50 &4668128287344916965
 Rigidbody2D:
   serializedVersion: 4
@@ -131,9 +131,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab17147bf498c2945b9d81959e129086, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orbitalDistance: 5
-  orbitalNudgeStrength: 1
-  orbitalNetForceFactor: 1
+  orbitalDistance: 10
+  orbitalNudgeStrength: 2
+  orbitalNetForceFactor: 2
 --- !u!58 &1268831186248649284
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -163,3 +163,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   energyGain: 100
+  energyCubePrefab: {fileID: 5816334395788516546, guid: 206023982a8029f418da81b8f9fa5616,
+    type: 3}
+  energySpawnVariance: 5
