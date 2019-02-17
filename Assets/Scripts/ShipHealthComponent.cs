@@ -96,6 +96,8 @@ public class ShipHealthComponent : MonoBehaviour
     {
         yield return new WaitForSeconds(destroyedRetainTimer);
         Destroy(gameObject);
+        Camera.main.GetComponent<GameOver>().SetGameOverScreen();
+
     }
 
     public bool IsShieldOn()
