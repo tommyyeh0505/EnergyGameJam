@@ -4715,7 +4715,7 @@ ParticleSystem:
 --- !u!199 &5169347776504793216
 ParticleSystemRenderer:
   serializedVersion: 6
-  m_ObjectHideFlags: 2
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -4927,6 +4927,7 @@ GameObject:
   - component: {fileID: 1388088136499668249}
   - component: {fileID: 2634429587872713998}
   - component: {fileID: 4475349353982156008}
+  - component: {fileID: 7202642152591232892}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Player
@@ -5047,6 +5048,7 @@ MonoBehaviour:
   maxSpeed: 15
   rotateSpeed: 4
   rotationDragFactor: 0.6
+  decelerationWeight: 2
 --- !u!114 &1577079995700776958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5065,6 +5067,8 @@ MonoBehaviour:
   shieldPrefab: {fileID: 8048014926160274428, guid: dab0d3beb5efa214cacbd3b7bd33e2b1,
     type: 3}
   shieldBounciness: 60
+  cameraShakeDuration: 0.5
+  cameraShakeMagnitude: 1
 --- !u!114 &2292917158644954839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5082,6 +5086,7 @@ MonoBehaviour:
   maxEnergy: 100
   minEnergy: 0
   rechargeThreshold: 25
+  energyBar: {fileID: 0}
 --- !u!95 &1388088136499668249
 Animator:
   serializedVersion: 3
@@ -5193,6 +5198,22 @@ PolygonCollider2D:
       - {x: -0.22999999, y: -1.02}
       - {x: -0.19999999, y: -1.06}
       - {x: -0.16, y: -1.0699999}
+--- !u!58 &7202642152591232892
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3614679745085772529}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 2.56
 --- !u!1 &7988938564734201791
 GameObject:
   m_ObjectHideFlags: 0

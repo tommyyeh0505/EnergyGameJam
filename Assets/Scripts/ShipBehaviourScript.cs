@@ -25,6 +25,7 @@ public class ShipBehaviourScript : MonoBehaviour {
     private bool orbitClockWise = false;
     private bool alreadyDead = false;
 
+
     void Start () {
         rgbd2d = GetComponent<Rigidbody2D>();
         energyComponent = GetComponent<ShipEnergyComponent>();
