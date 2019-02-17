@@ -22,6 +22,7 @@ public class ShipHealthComponent : MonoBehaviour
 
     private GameObject shield;
     private bool shieldOn = false;
+    private bool dead = false;
 
     private CircleCollider2D CircleCollider;
     private PolygonCollider2D PolygonCollider;
@@ -89,10 +90,14 @@ public class ShipHealthComponent : MonoBehaviour
 
         if (shieldOn)
         {
-            if (collision.gameObject.tag == "Bullet" || collision.gameObject.tag == "Enemy")
+            if (collision.gameObject.tag == "Bullet")
             {
                 Destroy(collision.gameObject);
-            } else
+            } else if (collision.gameObject.tag == "Enemy")
+            {
+                collision.gameObject.GetComponent<EnemyHealthComponent>().Die();
+            }
+            else
             {
                 Debug.Log("bounced");
                 Bounce(collision);
@@ -101,7 +106,7 @@ public class ShipHealthComponent : MonoBehaviour
         }
         else
         {
-            if (collision.gameObject.tag != "PlayerBullet")
+            if (collision.gameObject.tag != "PlayerBullet" && !dead)
             {
                 Bounce(collision);
                 Die();
@@ -127,6 +132,7 @@ public class ShipHealthComponent : MonoBehaviour
     private void Die()
     {
         Debug.Log("DIE");
+        dead = true;
         SpriteRenderer ren = GetComponent<SpriteRenderer>();
         if (ren)
         {
@@ -157,7 +163,7 @@ public class ShipHealthComponent : MonoBehaviour
         {
             animator.SetTrigger("dying");
         }
-
+        GameObject.FindGameObjectsWithTag("GameUI")[0].SetActive(false);
         StartCoroutine(DestroyTimer());
     }
 
