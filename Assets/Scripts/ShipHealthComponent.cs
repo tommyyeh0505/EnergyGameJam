@@ -110,7 +110,8 @@ public class ShipHealthComponent : MonoBehaviour
             if (collision.gameObject.tag == "Bullet")
             {
                 Destroy(collision.gameObject);
-            } else if (collision.gameObject.tag == "Enemy")
+            }
+            else if (collision.gameObject.tag == "Enemy")
             {
                 collision.gameObject.GetComponent<EnemyHealthComponent>().Die();
                 KilledEnemy();
@@ -119,8 +120,9 @@ public class ShipHealthComponent : MonoBehaviour
             {
                 Debug.Log("bounced");
                 Bounce(collision);
-            //}
-            //TODO: maybe kill thursters for 1 second after bounce for a disorientating effect
+                //}
+                //TODO: maybe kill thursters for 1 second after bounce for a disorientating effect
+            }
         }
         else
         {
