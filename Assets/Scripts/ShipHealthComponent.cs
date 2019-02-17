@@ -153,6 +153,14 @@ public class ShipHealthComponent : MonoBehaviour
     {
         Debug.Log("DIE");
         dead = true;
+        if (Camera.main)
+        {
+            CameraAudioScript mainAudio = Camera.main.GetComponent<CameraAudioScript>();
+            if (mainAudio)
+            {
+                mainAudio.Stop();
+            }
+        }
         SpriteRenderer ren = GetComponent<SpriteRenderer>();
         if (ren)
         {
