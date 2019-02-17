@@ -5071,6 +5071,7 @@ MonoBehaviour:
   shieldBounciness: 60
   cameraShakeDuration: 0.5
   cameraShakeMagnitude: 1
+  explodeAudio: {fileID: 8300000, guid: b7e86c83177fc4a58998698f0c50885c, type: 3}
 --- !u!114 &2292917158644954839
 MonoBehaviour:
   m_ObjectHideFlags: 0
