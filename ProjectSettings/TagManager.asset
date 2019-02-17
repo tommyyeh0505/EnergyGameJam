@@ -9,6 +9,7 @@ TagManager:
   - PlayerBullet
   - Enemy
   - EnergyPickup
+  - GameUI
   layers:
   - Default
   - TransparentFX
