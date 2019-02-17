@@ -47,6 +47,7 @@ public class GameOver : MonoBehaviour
     public void SetGameOverScreen()
     {
         GameOverScreen.SetActive(true);
+        record = false;
     }
 
     public void ResetGame()
