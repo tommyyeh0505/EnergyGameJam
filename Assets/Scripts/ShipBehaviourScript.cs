@@ -13,11 +13,16 @@ public class ShipBehaviourScript : MonoBehaviour {
     private Rigidbody2D rgbd2d;
     private ShipEnergyComponent energyComponent;
     private float thrustDrain = 5f;
-
+    private Quaternion orientation;
+    private Quaternion currentDirection;
+    private OrbitalForceComponent orbitRef;
+    private bool currentlyOrbiting = false;
 
 	void Start () {
         rgbd2d = GetComponent<Rigidbody2D>();
         energyComponent = GetComponent<ShipEnergyComponent>();
+        orientation = Quaternion.identity;
+        currentDirection = Quaternion.identity;
 	}
 
     void Update()
@@ -25,7 +30,8 @@ public class ShipBehaviourScript : MonoBehaviour {
         moveDirection = new Vector3(0, Mathf.Max(0.0f, Input.GetAxis("Vertical")), 0);
         moveDirection = transform.TransformDirection(moveDirection);
 
-        transform.Rotate(0, 0, -Input.GetAxis("Horizontal") * rotateSpeed);
+        currentDirection *= Quaternion.Euler(0, 0, -Input.GetAxis("Horizontal") * rotateSpeed);
+        transform.rotation = orientation * currentDirection;
 
         rgbd2d.AddForce(moveDirection * thrust * Time.deltaTime);
         if (rgbd2d.velocity.magnitude > maxSpeed)
