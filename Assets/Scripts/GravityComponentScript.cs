@@ -16,10 +16,13 @@ public class GravityComponentScript : MonoBehaviour
 
     private void OnDestroy()
     {
-        GravityFieldScript gravityManager = Camera.main.GetComponent<GravityFieldScript>();
-        if (gravityManager)
+        if (Camera.main)
         {
-            gravityManager.UnregisterAffected(this);
+            GravityFieldScript gravityManager = Camera.main.GetComponent<GravityFieldScript>();
+            if (gravityManager)
+            {
+                gravityManager.UnregisterAffected(this);
+            }
         }
     }
 
