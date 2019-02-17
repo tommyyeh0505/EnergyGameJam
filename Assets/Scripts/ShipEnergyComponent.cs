@@ -9,6 +9,7 @@ public class ShipEnergyComponent : MonoBehaviour
     [SerializeField] public float maxEnergy = 100.0f;
     [SerializeField] public float minEnergy = 0.0f;
     [SerializeField] public float rechargeThreshold = 25.0f;
+    public UnityEngine.UI.Slider energyBar;
 
     private void Update()
     {
@@ -16,6 +17,13 @@ public class ShipEnergyComponent : MonoBehaviour
         {
             GainEnergy(energyGain * Time.deltaTime);
         }
+
+        energyBar.value = CalculateHealth();
+    }
+
+    float CalculateHealth()
+    {
+        return energy / maxEnergy;
     }
 
     public bool HasEnergyRemaining(float reduction)

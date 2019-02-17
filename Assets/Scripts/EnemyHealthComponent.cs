@@ -7,9 +7,12 @@ using UnityEngine;
 public class EnemyHealthComponent : MonoBehaviour
 {
     [SerializeField] public GameObject prefabEnergyPickup;
-    float destroyedRetainTimer = 4f;
     private bool alreadyDead = false;
     public ParticleSystem explosion;
+    public float MutualCollisionKillSpeed = 5f;
+    
+    public float cameraShakeDurationOnKill = 0.05f;
+    public float cameraShakeMagnitudeOnKill = 5f;
 
     // Start is called before the first frame update
     void Start()
@@ -27,9 +30,17 @@ public class EnemyHealthComponent : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            Debug.Log("enemy enemy");
+            if (collision.relativeVelocity.magnitude < MutualCollisionKillSpeed)
+            {
+                return;
+            }
+        }
+
+        if (collision.gameObject.tag == "Bullet")
+        {
             return;
         }
+
         ShipHealthComponent shipHealth = collision.gameObject.GetComponent<ShipHealthComponent>();
         if (shipHealth && !shipHealth.IsShieldOn())
         {
@@ -42,7 +53,7 @@ public class EnemyHealthComponent : MonoBehaviour
         }
     }
 
-    private void Die()
+    public void Die()
     {
         SpriteRenderer renderer = GetComponent<SpriteRenderer>();
         if (renderer)
@@ -67,14 +78,19 @@ public class EnemyHealthComponent : MonoBehaviour
         }
 
         alreadyDead = true;
-      //  Destroy(gameObject);
 
-        StartCoroutine(DestroyTimer());
+        CameraMovement camera = Camera.main.GetComponent<CameraMovement>();
+        if (camera)
+        {
+            camera.ShakeCamera(cameraShakeMagnitudeOnKill, cameraShakeDurationOnKill);
+        }
+
+        StartCoroutine(DestroyTimer(explosion.duration));
     }
 
-    private IEnumerator DestroyTimer()
+    private IEnumerator DestroyTimer(float timer)
     {
-        yield return new WaitForSeconds(destroyedRetainTimer);
+        yield return new WaitForSeconds(timer);
         Destroy(gameObject);
     }
 }

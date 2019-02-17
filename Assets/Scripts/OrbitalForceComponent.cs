@@ -21,8 +21,22 @@ public class OrbitalForceComponent : MonoBehaviour
         
     }
 
+    private void OnDrawGizmos()
+    {
+        //CircleCollider2D circleCollider = GetComponent<CircleCollider2D>();
+        //if (circleCollider)
+        //{
+        //    Gizmos.DrawSphere(transform.position, circleCollider.radius * transform.localScale.x);
+        //}
+    }
+
     public bool IsInOrbit(float distance)
     {
+        CircleCollider2D circleCollider = GetComponent<CircleCollider2D>();
+        if (circleCollider)
+        {
+            return distance < orbitalDistance + circleCollider.radius * transform.localScale.x;
+        }
         return distance < orbitalDistance;
     }
 

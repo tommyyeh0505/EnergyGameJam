@@ -24,8 +24,9 @@ public class GravityWellComponentScript : MonoBehaviour
             {
                 Vector2 difference = this.transform.position - target.transform.position;
                 float distance = difference.magnitude;
+                float distanceFactor = difference.sqrMagnitude / distance;
                 Vector2 dir = difference.normalized;
-                Vector2 force = dir * strength / distance;
+                Vector2 force = dir * strength / distanceFactor;
 
                 if (orbitalForce && orbitalForce.IsInOrbit(distance))
                 {

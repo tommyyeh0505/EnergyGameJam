@@ -65,7 +65,7 @@ public class EnemySpawnerComponent : MonoBehaviour
 
     public int SpawnEnemy(string EnemyType, Vector3 location)
     {   
-        Instantiate(Enemies[0], location, Quaternion.identity);
+        Instantiate(Enemies[Random.Range(0, Enemies.Count)], location, Quaternion.identity);
         NumEnemies++;
         return 0;
     }

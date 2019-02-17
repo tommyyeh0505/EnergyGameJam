@@ -17,11 +17,11 @@ public class CameraMovement : MonoBehaviour
     public float shakeAmount = 1f;
     public float shakeDuration = 3f;
     private float timeStartShake = 0f;
+    private Coroutine cameraShakeCoroutine;
 
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame
@@ -45,28 +45,31 @@ public class CameraMovement : MonoBehaviour
 
             Camera.main.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -10f);
         }
-
-        if (!isShaking)
-        {
-            float shakeTime = Time.time - timeStartShake;
-            if (shakeTime < shakeDuration)
-            {
-                float completion = (shakeTime - shakeDuration) / shakeDuration;
-                // calculate the offset of the camera
-                shakeCameraOffset = new Vector3(Mathf.PerlinNoise(Time.time * shakeFreaquency * completion, 0f) * shakeAmount * completion,
-                                                Mathf.PerlinNoise(0f, Time.time * shakeFreaquency * completion) * shakeAmount * completion, -10f);
-                Camera.main.transform.position += shakeCameraOffset;
-            }
-            else
-            {
-                isShaking = false;
-            }
-        }
     }
 
-    void StartCameraShake(float duration)
+    public void ShakeCamera(float magnitude, float duration)
+    {
+        if (cameraShakeCoroutine != null)
+        {
+            StopCoroutine(cameraShakeCoroutine);
+        }
+
+        cameraShakeCoroutine = StartCoroutine(StartCameraShake(magnitude, duration));
+    }
+
+    IEnumerator StartCameraShake(float magnitude, float duration)
     {
         timeStartShake = Time.time;
-        isShaking = true;
+
+        while(Time.time - timeStartShake < shakeDuration)
+        {
+            float completion = ((Time.time - timeStartShake) - shakeDuration) / shakeDuration;
+            // calculate the offset of the camera
+            shakeCameraOffset = new Vector3(Mathf.PerlinNoise(Time.time * shakeFreaquency * completion, 0f) * shakeAmount * completion,
+                                            Mathf.PerlinNoise(0f, Time.time * shakeFreaquency * completion) * shakeAmount * completion, -10f);
+            Camera.main.transform.position += shakeCameraOffset * magnitude;
+
+            yield return null;
+        }
     }
 }

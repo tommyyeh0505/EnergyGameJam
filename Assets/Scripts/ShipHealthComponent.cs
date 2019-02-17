@@ -15,6 +15,9 @@ public class ShipHealthComponent : MonoBehaviour
     public GameObject shieldPrefab;
     public float shieldBounciness = 80f;
 
+    public float cameraShakeDuration = 0.5f;
+    public float cameraShakeMagnitude = 1f;
+
     private GameObject shield;
     private bool shieldOn = false;
 
@@ -26,7 +29,7 @@ public class ShipHealthComponent : MonoBehaviour
 
     public void ToggleShieldOn()
     {
-        if (energyComponent && energyComponent.HasEnergyRemaining(shieldDrain))
+        if (energyComponent && energyComponent.HasEnergyRemaining(0))
         {
             shieldOn = true;
             shield = Instantiate(shieldPrefab, transform.position, Quaternion.identity);
@@ -85,6 +88,12 @@ public class ShipHealthComponent : MonoBehaviour
         {
             body.AddForce((body.position - (Vector2)collision.transform.position).normalized * body.velocity.magnitude * shieldBounciness);
         }
+
+        CameraMovement camera = Camera.main.GetComponent<CameraMovement>();
+        if (camera)
+        {
+            camera.ShakeCamera(cameraShakeMagnitude, cameraShakeDuration);
+        }
     }
 
     private void Die()
@@ -115,6 +124,12 @@ public class ShipHealthComponent : MonoBehaviour
             firing.enabled = false;
         }
 
+        Animator animator = GetComponent<Animator>();
+        if (animator)
+        {
+            animator.SetTrigger("dying");
+        }
+
         StartCoroutine(DestroyTimer());
     }
 
@@ -123,15 +138,12 @@ public class ShipHealthComponent : MonoBehaviour
         yield return new WaitForSeconds(destroyedRetainTimer);
         Destroy(gameObject);
         Camera.main.GetComponent<GameOver>().SetGameOverScreen();
-
     }
 
     private IEnumerator PlayExplosion()
     {
         yield return new WaitForSeconds(0);
         explosion.Play();
-
-
     }
 
     public bool IsShieldOn()
