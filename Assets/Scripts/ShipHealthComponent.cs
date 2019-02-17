@@ -55,6 +55,15 @@ public class ShipHealthComponent : MonoBehaviour
         }
     }
 
+    public void KilledEnemy()
+    {
+        ShipBehaviourScript behavior = GetComponent<ShipBehaviourScript>();
+        if (behavior)
+        {
+            behavior.SpeedBoost();
+        }
+    }
+
     public void ToggleShieldOff()
     {
         CircleCollider.enabled = false;
@@ -76,13 +85,17 @@ public class ShipHealthComponent : MonoBehaviour
         }
         if (collision.gameObject.tag == "Bullet" || collision.gameObject.tag == "Enemy")
         {
+            if (collision.gameObject.tag == "Enemy")
+            {
+                collision.gameObject.GetComponent<EnemyHealthComponent>().Die();
+                KilledEnemy();
+            }
             Destroy(collision.gameObject);
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
         if (collision.gameObject.tag == "EnergyPickup")
         {
             return;
@@ -96,6 +109,7 @@ public class ShipHealthComponent : MonoBehaviour
             } else if (collision.gameObject.tag == "Enemy")
             {
                 collision.gameObject.GetComponent<EnemyHealthComponent>().Die();
+                KilledEnemy();
             }
             else
             {

@@ -5051,6 +5051,9 @@ MonoBehaviour:
   rotationDragFactor: 0.6
   decelerationWeight: 2
   velocity: {x: 0, y: 0}
+  maxSpeedDecelerationFactor: 0.98
+  speedBoostForceMagnitude: 4
+  speedBoostDuration: 1
 --- !u!114 &1577079995700776958
 MonoBehaviour:
   m_ObjectHideFlags: 0

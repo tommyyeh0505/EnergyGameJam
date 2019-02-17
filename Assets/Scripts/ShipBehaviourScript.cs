@@ -12,8 +12,10 @@ public class ShipBehaviourScript : MonoBehaviour {
     public float rotationDragFactor = 0.5f;
     public float decelerationWeight = 2f;
     [SerializeField] public Vector2 velocity;
+    public float maxSpeedDecelerationFactor = 0.98f;
+    public float speedBoostForceMagnitude = 5f;
+    public float speedBoostDuration = 1f;
 
-    private Vector3 moveDirection = Vector3.zero;
     private Rigidbody2D rgbd2d;
     private ShipEnergyComponent energyComponent;
     private float thrustDrain = 5f;
@@ -25,6 +27,8 @@ public class ShipBehaviourScript : MonoBehaviour {
     private bool currentlyOrbiting = false;
     private bool orbitClockWise = false;
     private bool alreadyDead = false;
+    private bool isSpeedBoosting = false;
+    private Coroutine speedCorouting;
 
 
     void Start () {
@@ -41,7 +45,7 @@ public class ShipBehaviourScript : MonoBehaviour {
         {
             currentDirection *= Quaternion.Euler(0, 0, -Input.GetAxis("Horizontal") * rotateSpeed);
 
-            moveDirection = new Vector3(0, Mathf.Max(0.0f, Input.GetAxis("Vertical")), 0);
+            Vector3 moveDirection = new Vector3(0, Mathf.Max(0.0f, Input.GetAxis("Vertical")), 0);
             moveDirection = transform.TransformDirection(moveDirection);
 
             Vector2 force = moveDirection * thrust;
@@ -53,9 +57,9 @@ public class ShipBehaviourScript : MonoBehaviour {
             }
 
             rgbd2d.AddForce(force * Time.deltaTime);
-            if (rgbd2d.velocity.magnitude > maxSpeed)
+            if (isSpeedBoosting == false && rgbd2d.velocity.magnitude > maxSpeed)
             {
-                rgbd2d.velocity = rgbd2d.velocity.normalized * maxSpeed;
+                rgbd2d.velocity *= (maxSpeed / rgbd2d.velocity.magnitude) * maxSpeedDecelerationFactor;
             }
 
             if (energyComponent && Input.GetButton("Vertical"))
@@ -104,5 +108,24 @@ public class ShipBehaviourScript : MonoBehaviour {
     public void Die()
     {
         alreadyDead = true;
+    }
+
+    public void SpeedBoost()
+    {
+        isSpeedBoosting = true;
+        Vector2 moveDirection = transform.TransformDirection(Vector2.up);
+        rgbd2d.AddForce(moveDirection * speedBoostForceMagnitude, ForceMode2D.Impulse);
+
+        if (speedCorouting != null)
+        {
+            StopCoroutine(speedCorouting);
+        }
+        speedCorouting = StartCoroutine(StopSpeedBoost());
+    }
+
+    IEnumerator StopSpeedBoost()
+    {
+        yield return new WaitForSeconds(speedBoostDuration);
+        isSpeedBoosting = false;
     }
 }

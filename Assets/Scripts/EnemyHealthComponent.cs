@@ -48,6 +48,10 @@ public class EnemyHealthComponent : MonoBehaviour
         }
         if (!alreadyDead)
         {
+            if (shipHealth)
+            {
+                shipHealth.KilledEnemy();
+            }
             Instantiate(prefabEnergyPickup, gameObject.transform.position, Quaternion.identity);
             Die();
         }
