@@ -7,6 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(ShipEnergyComponent))]
 [RequireComponent(typeof(CircleCollider2D))]
 [RequireComponent(typeof(PolygonCollider2D))]
+[RequireComponent(typeof(AudioSource))]
 public class ShipHealthComponent : MonoBehaviour
 {
     [SerializeField] public float shieldDrain = 15f;
@@ -27,14 +28,13 @@ public class ShipHealthComponent : MonoBehaviour
     private CircleCollider2D CircleCollider;
     private PolygonCollider2D PolygonCollider;
 
+    [SerializeField] public AudioClip explodeAudio;
 
     void Start()
     {
-        
         energyComponent = GetComponent<ShipEnergyComponent>();
         CircleCollider = GetComponent<CircleCollider2D>();
         PolygonCollider = GetComponent<PolygonCollider2D>();
-
     }
 
     public void ToggleShieldOn()
@@ -140,6 +140,11 @@ public class ShipHealthComponent : MonoBehaviour
             StartCoroutine(PlayExplosion());
             Debug.Log("after exp");
             ren.color = Color.red;
+        }
+        AudioSource audioSource = GetComponent<AudioSource>();
+        if (audioSource)
+        {
+            audioSource.PlayOneShot(explodeAudio, 1);
         }
         Rigidbody2D body = GetComponent<Rigidbody2D>();
         if (body)
