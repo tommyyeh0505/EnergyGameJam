@@ -92,3 +92,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb35e0ff5825c41279eb641195b45760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefabMars: {fileID: 9178110893463130633, guid: 3c5425f1c95254f4f82a0a2c8c1380f2,
+    type: 3}
+  prefabMercury: {fileID: 8718908003140354719, guid: e1ff74894383ef347b3314cb2f9ee813,
+    type: 3}
+  prefabNeptune: {fileID: 7142232655079771763, guid: ebcc7317ab3a6d34b80679ebadb308ad,
+    type: 3}
+  prefabOrange: {fileID: 6645140767490108268, guid: fe0fa050c96810a49a5c2abf4c229565,
+    type: 3}
+  prefabUranus: {fileID: 7668555111492432438, guid: 85a7ad4bb822ddc409d6c33712bcb2fb,
+    type: 3}
+  prefabWorstPlanet: {fileID: 288005211161384003, guid: d33cf78c24918e049b8b83e28dc9b9fa,
+    type: 3}
+  prefabRedSun: {fileID: 3229285319116930357, guid: 0e034dd94d2433d468e32be5d1edab76,
+    type: 3}
+  minDistanceBetweenScenery: 25
+  minNumTerrain: 1
+  maxNumTerrain: 2
