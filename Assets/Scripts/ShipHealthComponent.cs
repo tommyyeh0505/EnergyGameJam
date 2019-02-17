@@ -62,13 +62,17 @@ public class ShipHealthComponent : MonoBehaviour
 
         if (shieldOn)
         {
-            Bounce(collision);
+            if (collision.gameObject.tag != "Enemy")
+            {
+                Bounce(collision);
+            }
             //TODO: maybe kill thursters for 1 second after bounce for a disorientating effect
         }
         else
         {
             if (collision.gameObject.tag != "PlayerBullet")
             {
+                Bounce(collision);
                 Die();
             }
         } 
@@ -99,6 +103,18 @@ public class ShipHealthComponent : MonoBehaviour
         {
             body.Sleep();
         }
+        ShipBehaviourScript behavior = GetComponent<ShipBehaviourScript>();
+        if (behavior)
+        {
+            behavior.Die();
+        }
+
+        ShipGunComponent firing = GetComponent<ShipGunComponent>();
+        if (firing)
+        {
+            firing.enabled = false;
+        }
+
         StartCoroutine(DestroyTimer());
     }
 

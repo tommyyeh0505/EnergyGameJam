@@ -96,7 +96,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   strength: 5
-  orbitDistance: 3
   effectiveRange: 100
 --- !u!58 &7004998476192512744
 CircleCollider2D:
@@ -147,5 +146,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab17147bf498c2945b9d81959e129086, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  orbitalDistance: 8
-  orbitalNudgeStrength: 2
+  orbitalDistance: 5
+  orbitalNudgeStrength: 1
+  orbitalNetForceFactor: 1

@@ -7,6 +7,7 @@ public class OrbitalForceComponent : MonoBehaviour
 {
     public float orbitalDistance = 5.0f;
     public float orbitalNudgeStrength = 1.0f;
+    public float orbitalNetForceFactor = 0.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -42,7 +43,7 @@ public class OrbitalForceComponent : MonoBehaviour
             }
         }
 
-        gravComponent.ApplyGravity(((perpendicular * force.magnitude * orbitalNudgeStrength) + force).normalized * force.magnitude);
+        gravComponent.ApplyGravity(((perpendicular * force.magnitude * orbitalNudgeStrength) + force).normalized * orbitalNetForceFactor);
 
         ShipBehaviourScript behavior = gravComponent.GetComponent<ShipBehaviourScript>();
         if (behavior)

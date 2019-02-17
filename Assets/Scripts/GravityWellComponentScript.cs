@@ -5,7 +5,6 @@ using System.Collections.Generic;
 public class GravityWellComponentScript : MonoBehaviour
 {
     [SerializeField] public float strength = 5f;
-    [SerializeField] public float orbitDistance = 3.0f;
     [SerializeField] public float effectiveRange = 100f;
 
     private OrbitalForceComponent orbitalForce;

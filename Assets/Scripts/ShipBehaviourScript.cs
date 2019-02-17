@@ -21,37 +21,42 @@ public class ShipBehaviourScript : MonoBehaviour {
     private OrbitalForceComponent orbitRef;
     private bool currentlyOrbiting = false;
     private bool orbitClockWise = false;
+    private bool alreadyDead = false;
 
     void Start () {
         rgbd2d = GetComponent<Rigidbody2D>();
         energyComponent = GetComponent<ShipEnergyComponent>();
         orientation = Quaternion.identity;
         currentDirection = Quaternion.identity;
+        alreadyDead = false;
 	}
 
     void Update()
     {
-        moveDirection = new Vector3(0, Mathf.Max(0.0f, Input.GetAxis("Vertical")), 0);
-        moveDirection = transform.TransformDirection(moveDirection);
-
-        currentDirection *= Quaternion.Euler(0, 0, -Input.GetAxis("Horizontal") * rotateSpeed);
-        transform.rotation = orientation * currentDirection;
-
-        rgbd2d.AddForce(moveDirection * thrust * Time.deltaTime);
-        if (rgbd2d.velocity.magnitude > maxSpeed)
+        if (alreadyDead == false)
         {
-            rgbd2d.velocity = rgbd2d.velocity.normalized * maxSpeed;
-        }
+            currentDirection *= Quaternion.Euler(0, 0, -Input.GetAxis("Horizontal") * rotateSpeed);
 
-        if (energyComponent && Input.GetButton("Vertical") ) {
-            energyComponent.ReduceEnergy(thrustDrain * Time.deltaTime);
-        }
+            moveDirection = new Vector3(0, Mathf.Max(0.0f, Input.GetAxis("Vertical")), 0);
+            moveDirection = transform.TransformDirection(moveDirection);
 
-        if (Input.GetButtonDown("reset"))
-        {
-            transform.position = Vector3.zero;
-            rgbd2d.velocity = Vector3.zero;
-            energyComponent.ResetEnergy();
+            rgbd2d.AddForce(moveDirection * thrust * Time.deltaTime);
+            if (rgbd2d.velocity.magnitude > maxSpeed)
+            {
+                rgbd2d.velocity = rgbd2d.velocity.normalized * maxSpeed;
+            }
+
+            if (energyComponent && Input.GetButton("Vertical"))
+            {
+                energyComponent.ReduceEnergy(thrustDrain * Time.deltaTime);
+            }
+
+            if (Input.GetButtonDown("reset"))
+            {
+                transform.position = Vector3.zero;
+                rgbd2d.velocity = Vector3.zero;
+                energyComponent.ResetEnergy();
+            }
         }
 
         if (currentlyOrbiting)
@@ -66,6 +71,8 @@ public class ShipBehaviourScript : MonoBehaviour {
             orientation *= Quaternion.Euler(0, 0, (orbitClockWise ? -1 : 1) * Mathf.LerpAngle(0, Vector2.Angle(dirToObject, orbitalOrientation), rotationDragFactor));
             orbitalOrientation = dirToObject;
         }
+
+        transform.rotation = orientation * currentDirection;
     }
 
     public void StartOrbit(bool clockWise, OrbitalForceComponent orbital)
@@ -77,5 +84,10 @@ public class ShipBehaviourScript : MonoBehaviour {
             currentlyOrbiting = true;
             orbitClockWise = clockWise;
         }
+    }
+
+    public void Die()
+    {
+        alreadyDead = true;
     }
 }
