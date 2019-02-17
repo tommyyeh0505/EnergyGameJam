@@ -7,7 +7,6 @@ using UnityEngine;
 public class EnemyHealthComponent : MonoBehaviour
 {
     [SerializeField] public GameObject prefabEnergyPickup;
-    float destroyedRetainTimer = 4f;
     private bool alreadyDead = false;
     public ParticleSystem explosion;
 
@@ -42,7 +41,7 @@ public class EnemyHealthComponent : MonoBehaviour
         }
     }
 
-    private void Die()
+    public void Die()
     {
         SpriteRenderer renderer = GetComponent<SpriteRenderer>();
         if (renderer)
@@ -67,14 +66,13 @@ public class EnemyHealthComponent : MonoBehaviour
         }
 
         alreadyDead = true;
-      //  Destroy(gameObject);
 
-        StartCoroutine(DestroyTimer());
+        StartCoroutine(DestroyTimer(explosion.duration));
     }
 
-    private IEnumerator DestroyTimer()
+    private IEnumerator DestroyTimer(float timer)
     {
-        yield return new WaitForSeconds(destroyedRetainTimer);
+        yield return new WaitForSeconds(timer);
         Destroy(gameObject);
     }
 }

@@ -70,8 +70,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3603b3743f880a64bb0d8c99db8adae2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  impulse: 1
-  timeBetweenMoves: 0.1
+  speed: 6
+  lungeRange: 5
+  vicinity: 4
+  recalculatePathThreshold: 8
+  despawnRange: 30
 --- !u!212 &468639093506378078
 SpriteRenderer:
   m_ObjectHideFlags: 0
