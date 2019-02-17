@@ -2282,6 +2282,11 @@ PrefabInstance:
       propertyPath: energyBar
       value: 
       objectReference: {fileID: 1308686654}
+    - target: {fileID: 7202642152591232892, guid: 276304badd00ffa42878f0cb18fab489,
+        type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 276304badd00ffa42878f0cb18fab489, type: 3}
 --- !u!1001 &9178110892111783881

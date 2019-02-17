@@ -42,8 +42,7 @@ public class ShipHealthComponent : MonoBehaviour
         {
             shieldOn = true;
             Debug.Log("CircleCollider Active");
-            PolygonCollider.gameObject.SetActive(false);
-            CircleCollider.gameObject.SetActive(true);
+            CircleCollider.enabled = true;
             shield = Instantiate(shieldPrefab, transform.position, Quaternion.identity);
             shield.transform.parent = gameObject.transform;
 
@@ -58,14 +57,26 @@ public class ShipHealthComponent : MonoBehaviour
     public void ToggleShieldOff()
     {
         Debug.Log("PolygonCollider Active");
-        CircleCollider.gameObject.SetActive(false);
-        PolygonCollider.gameObject.SetActive(true);
+        CircleCollider.enabled = false;
         shieldOn = false;
         Destroy(shield);
         Animator animator = GetComponent<Animator>();
         if (animator)
         {
             animator.SetBool("shield", false);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "EnergyPickup")
+        {
+            return;
+        }
+        if (collision.gameObject.tag == "Bullet" || collision.gameObject.tag == "Enemy")
+        {
+            Destroy(collision.gameObject);
+            Debug.Log("Destroying " + collision.gameObject.tag);
         }
     }
 
@@ -83,8 +94,10 @@ public class ShipHealthComponent : MonoBehaviour
             if (collision.gameObject.tag == "Bullet" || collision.gameObject.tag == "Enemy")
             {
                 Destroy(collision.gameObject);
+                Debug.Log("Destroying " + collision.gameObject.tag);
             } else
             {
+                Debug.Log("bounced");
                 Bounce(collision);
             }
             //TODO: maybe kill thursters for 1 second after bounce for a disorientating effect
