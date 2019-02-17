@@ -158,6 +158,7 @@ public class ShipHealthComponent : MonoBehaviour
             animator.SetTrigger("dying");
         }
 
+        GameObject.Find("GameUI").gameObject.SetActive(false);
         StartCoroutine(DestroyTimer());
     }
 
