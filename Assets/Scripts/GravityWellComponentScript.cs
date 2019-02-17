@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
+using System.Collections;
 public class GravityWellComponentScript : MonoBehaviour
 {
     [SerializeField] public float strength = 5f;

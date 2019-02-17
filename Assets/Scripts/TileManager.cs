@@ -13,6 +13,7 @@ public class TileManager : MonoBehaviour
     [SerializeField] public GameObject prefabUranus;
     [SerializeField] public GameObject prefabWorstPlanet;
     [SerializeField] public GameObject prefabRedSun;
+    [SerializeField] public GameObject prefabBlackHole;
     [SerializeField] public float minDistanceBetweenScenery;
     [SerializeField] public int minTerrainPerTile;
     [SerializeField] public int maxTerrainPerTile;
@@ -31,6 +32,7 @@ public class TileManager : MonoBehaviour
         prefabs.Add(prefabUranus);
         prefabs.Add(prefabWorstPlanet);
         prefabs.Add(prefabRedSun);
+        prefabs.Add(prefabBlackHole);
     }
 
     void Start()
