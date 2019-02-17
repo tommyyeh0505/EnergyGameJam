@@ -26,17 +26,17 @@ public class EnemySpawnerComponent : MonoBehaviour
     private int NumEnemies;
     private float[] SpawnBoundaries; //[Top, Bottom, Left, Right]
 
-    [SerializeField] List<GameObject> Enemies;
-    [SerializeField] float EnemiesPerSecond;
-    [SerializeField] int MaxEnemiesOnMap;
-    [SerializeField] float EnemySpawnGrowthFactor;
-    [SerializeField] float SpawnBoundaryPadding; //How much padding around camera for enemy spawn
+    [SerializeField] public List<GameObject> Enemies;
+    [SerializeField] public float EnemiesPerSecond;
+    [SerializeField] public int MaxEnemiesOnMap;
+    [SerializeField] public float EnemySpawnGrowthFactor;
+    [SerializeField] public float SpawnBoundaryPadding; //How much padding around camera for enemy spawn
     private List<OccupiedSpace> EntityPositions; //List of all entities that take up space (Bottom Left Corner, Top Right Corner)
-    [SerializeField] float LargestEntityRadius; //Largest used to eliminate risk of overlap
+    [SerializeField] public float LargestEntityRadius; //Largest used to eliminate risk of overlap
     private float OrthSize;
     //For Timing Enemy Spawn
     private float nextActionTime = 0.0f;
-    [SerializeField] float period;
+    [SerializeField] public float period;
 
     // Start is called before the first frame update
     void Start()

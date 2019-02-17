@@ -68,6 +68,8 @@ public class ShipBehaviourScript : MonoBehaviour {
                 transform.position = Vector3.zero;
                 rgbd2d.velocity = Vector3.zero;
                 energyComponent.ResetEnergy();
+                currentlyOrbiting = false;
+                orbitRef = null;
             }
         }
 

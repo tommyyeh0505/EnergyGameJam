@@ -52,6 +52,24 @@ public class TileManager : MonoBehaviour
             TileIndex tileIndex = GetTileIndex(shipPos.x, shipPos.y);
             GenerateSurroundingTiles(tileIndex);
         }
+
+        if (Input.GetButtonDown("reset"))
+        {
+            foreach (List<GameObject> terrainList in tiles.Values)
+            {
+                foreach (GameObject terrain in terrainList)
+                {
+                    Destroy(terrain);
+                }
+            }
+            tiles.Clear();
+            if (ship)
+            {
+                Vector3 shipPos = ship.transform.position;
+                TileIndex tileIndex = GetTileIndex(shipPos.x, shipPos.y);
+                GenerateSurroundingTiles(tileIndex);
+            }
+        }
     }
 
     private TileIndex GetTileIndex(float x, float y)
