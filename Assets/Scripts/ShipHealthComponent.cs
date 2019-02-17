@@ -56,7 +56,6 @@ public class ShipHealthComponent : MonoBehaviour
 
     public void ToggleShieldOff()
     {
-        Debug.Log("PolygonCollider Active");
         CircleCollider.enabled = false;
         shieldOn = false;
         Destroy(shield);
@@ -67,6 +66,7 @@ public class ShipHealthComponent : MonoBehaviour
         }
     }
 
+    //Shield Trigger
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "EnergyPickup")
@@ -76,13 +76,11 @@ public class ShipHealthComponent : MonoBehaviour
         if (collision.gameObject.tag == "Bullet" || collision.gameObject.tag == "Enemy")
         {
             Destroy(collision.gameObject);
-            Debug.Log("Destroying " + collision.gameObject.tag);
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Collided with " + collision.gameObject.tag);
 
         if (collision.gameObject.tag == "EnergyPickup")
         {
@@ -94,7 +92,6 @@ public class ShipHealthComponent : MonoBehaviour
             if (collision.gameObject.tag == "Bullet" || collision.gameObject.tag == "Enemy")
             {
                 Destroy(collision.gameObject);
-                Debug.Log("Destroying " + collision.gameObject.tag);
             } else
             {
                 Debug.Log("bounced");
