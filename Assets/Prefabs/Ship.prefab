@@ -330,6 +330,7 @@ MonoBehaviour:
   energyGain: 1
   maxEnergy: 100
   minEnergy: 0
+  rechargeThreshold: 25
 --- !u!95 &1388088136499668249
 Animator:
   serializedVersion: 3
@@ -363,4 +364,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefabBullet: {fileID: 3122367585333597168, guid: 0dcf121d6117c45b9b4d11e3ad3a1226,
     type: 3}
-  bulletEnergyCost: 10
+  bulletEnergyCost: 0.2
+  timeBetweenShots: 0.05
