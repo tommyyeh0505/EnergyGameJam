@@ -122,7 +122,6 @@ MonoBehaviour:
   ExplosionPrefab: {fileID: 6287483280433602336, guid: 43d012431276f4c42af81f36f4ffedcd,
     type: 3}
   energyPickupSpawnFrequency: 10
-  explosion: {fileID: 4802499534979923789}
   MutualCollisionKillSpeed: 5
   cameraShakeDurationOnKill: 0.1
   cameraShakeMagnitudeOnKill: 0.1
@@ -261,7 +260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  recalculatePathThreshold: 8
+  recalculatePathThreshold: 300000
   despawnRange: 30
   lungeRange: 5
   vicinity: 4
