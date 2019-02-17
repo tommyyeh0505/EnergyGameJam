@@ -408,12 +408,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Enemies:
   - {fileID: 468639093506378017, guid: 338e11c30a03c574da8239c2bfbb15b4, type: 3}
-  EnemiesPerSecond: 2
-  MaxEnemiesOnMap: 20
+  EnemiesPerSecond: 100
+  MaxEnemiesOnMap: 1000
   EnemySpawnGrowthFactor: 0
-  SpawnBoundaryPadding: 2
-  LargestEntityRadius: 2
-  period: 1
+  SpawnBoundaryPadding: 5
+  LargestEntityRadius: 1
+  period: 0.2
 --- !u!1001 &3614679745869037456
 PrefabInstance:
   m_ObjectHideFlags: 0
