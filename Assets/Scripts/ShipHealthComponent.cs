@@ -90,10 +90,14 @@ public class ShipHealthComponent : MonoBehaviour
 
         if (shieldOn)
         {
-            if (collision.gameObject.tag == "Bullet" || collision.gameObject.tag == "Enemy")
+            if (collision.gameObject.tag == "Bullet")
             {
                 Destroy(collision.gameObject);
-            } else
+            } else if (collision.gameObject.tag == "Enemy")
+            {
+                collision.gameObject.GetComponent<EnemyHealthComponent>().Die();
+            }
+            else
             {
                 Debug.Log("bounced");
                 Bounce(collision);

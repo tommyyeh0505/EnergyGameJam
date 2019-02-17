@@ -36,7 +36,7 @@ public class BulletBehaviourScript : MonoBehaviour
         {
             //Reduce health of enemy
             //if enemy is dead, destroy
-            Destroy(col.gameObject);
+            col.gameObject.GetComponent<EnemyHealthComponent>().Die();
         }
         Destroy(gameObject);
     }

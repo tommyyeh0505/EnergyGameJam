@@ -58,6 +58,7 @@ public class EnemyHealthComponent : MonoBehaviour
         SpriteRenderer renderer = GetComponent<SpriteRenderer>();
         if (renderer)
         {
+            Debug.Log("explode");
             // TODO: death anim
             explosion.Play();
             renderer.color = Color.clear;
