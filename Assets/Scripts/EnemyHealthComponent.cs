@@ -35,6 +35,12 @@ public class EnemyHealthComponent : MonoBehaviour
                 return;
             }
         }
+
+        if (collision.gameObject.tag == "Bullet")
+        {
+            return;
+        }
+
         ShipHealthComponent shipHealth = collision.gameObject.GetComponent<ShipHealthComponent>();
         if (shipHealth && !shipHealth.IsShieldOn())
         {

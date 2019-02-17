@@ -5,14 +5,15 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class EnemyAIComponent : MonoBehaviour
 {
-    public float speed = 5f;
+    [SerializeField] public float speed = 5f;
+    [SerializeField] public float recalculatePathThreshold = 8f;
+    [SerializeField] public float despawnRange = 30f;
+
     public float lungeRange = 5f;
     public float vicinity = 4f;
-    public float recalculatePathThreshold = 8f;
-    public float despawnRange = 30f;
 
-    private GameObject playerRef;
-    private bool alreadyMoving = false;
+    protected GameObject playerRef;
+    protected bool alreadyMoving = false;
 
     // Start is called before the first frame update
     void Start()
@@ -45,7 +46,7 @@ public class EnemyAIComponent : MonoBehaviour
         }
     }
 
-    IEnumerator ArcToPosition(Vector2 targetPos)
+    protected IEnumerator ArcToPosition(Vector2 targetPos)
     {
         alreadyMoving = true;
 
@@ -85,7 +86,7 @@ public class EnemyAIComponent : MonoBehaviour
         alreadyMoving = false;
     }
 
-    void MoveTo(Vector2 targetPos)
+    protected void MoveTo(Vector2 targetPos)
     {
         Rigidbody2D rigid2D = GetComponent<Rigidbody2D>();
 

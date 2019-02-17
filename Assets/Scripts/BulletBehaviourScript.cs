@@ -5,6 +5,9 @@ using UnityEngine;
 public class BulletBehaviourScript : MonoBehaviour
 {
     private Rigidbody2D body;
+    public bool hurtsEnemies = true;
+    public bool hurtsPlayer = true;
+    public float bulletSpeed = 0.5f;
 
     void Start()
     {
@@ -15,18 +18,18 @@ public class BulletBehaviourScript : MonoBehaviour
     {
         if (body)
         {
-            body.MovePosition(body.GetRelativePoint(new Vector2(0, 0.5f)));
+            body.MovePosition(body.GetRelativePoint(new Vector2(0, bulletSpeed)));
         }
 
     }
 
     void OnTriggerEnter(Collider col)
     {
-        if (col.gameObject.tag == "Player")
+        if (col.gameObject.tag == "Player" && hurtsPlayer)
         {
             return;
         }
-        if (col.gameObject.tag == "Enemy")
+        if (col.gameObject.tag == "Enemy" && hurtsEnemies)
         {
             //Reduce health of enemy
             //if enemy is dead, destroy

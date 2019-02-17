@@ -131,3 +131,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 378c3ac0038974a299bc6b7d4d2c8bf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hurtsEnemies: 1
+  hurtsPlayer: 0
