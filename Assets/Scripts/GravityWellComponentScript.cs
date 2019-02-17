@@ -8,6 +8,13 @@ public class GravityWellComponentScript : MonoBehaviour
     [SerializeField] public float orbitDistance = 3.0f;
     [SerializeField] public float effectiveRange = 100f;
 
+    private OrbitalForceComponent orbitalForce;
+
+    private void Start()
+    {
+        orbitalForce = GetComponent<OrbitalForceComponent>();
+    }
+
     void Update()
     {
         GravityFieldScript gravityManager = Camera.main.GetComponent<GravityFieldScript>();
@@ -18,11 +25,15 @@ public class GravityWellComponentScript : MonoBehaviour
             {
                 Vector2 difference = this.transform.position - target.transform.position;
                 float distance = difference.magnitude;
-                if (distance < effectiveRange)
-                {
-                    Vector2 dir = difference.normalized;
-                    Vector2 force = dir * strength / distance;
+                Vector2 dir = difference.normalized;
+                Vector2 force = dir * strength / distance;
 
+                if (orbitalForce && orbitalForce.IsInOrbit(distance))
+                {
+                    orbitalForce.ApplyOrbitalForce(target, force);
+                }
+                else if (distance < effectiveRange)
+                {
                     target.ApplyGravity(force);
                 }
             }
