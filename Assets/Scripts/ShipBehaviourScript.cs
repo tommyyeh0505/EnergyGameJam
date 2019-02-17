@@ -19,7 +19,7 @@ public class ShipBehaviourScript : MonoBehaviour {
 
     private Rigidbody2D rgbd2d;
     private ShipEnergyComponent energyComponent;
-    private float thrustDrain = 5f;
+    [SerializeField] public float thrustDrain = 5f;
     private Quaternion orientation;
     private Quaternion currentDirection;
 
