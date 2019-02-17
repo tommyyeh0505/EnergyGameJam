@@ -5045,7 +5045,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thrust: 300
   maxSpeed: 15
-  rotateSpeed: 3
+  rotateSpeed: 4
   rotationDragFactor: 0.6
 --- !u!114 &1577079995700776958
 MonoBehaviour:
