@@ -12,19 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: Tahoma Bold SDF
   m_EditorClassIdentifier: 
-  hashCode: 0
+  hashCode: 1637399530
   material: {fileID: 21968537493154874}
-  materialHashCode: 0
+  materialHashCode: 1364599585
   fontAssetType: 1
   m_fontInfo:
     Name: Tahoma
     PointSize: 62
-    Scale: 0
+    Scale: 1
     CharacterCount: 99
     LineHeight: 74.8125
     Baseline: 0
     Ascender: 62
-    CapHeight: 0
+    CapHeight: 45.062496
     Descender: -12.8125
     CenterLine: 0
     SuperscriptOffset: 62
@@ -34,7 +34,7 @@ MonoBehaviour:
     UnderlineThickness: 6.084961
     strikethrough: 17.886364
     strikethroughThickness: 6.084961
-    TabWidth: 0
+    TabWidth: 181.875
     Padding: 5
     AtlasWidth: 512
     AtlasHeight: 512
@@ -43,10 +43,10 @@ MonoBehaviour:
   - id: 32
     x: 6
     y: 517
-    width: 0
-    height: 0
+    width: 18.1875
+    height: 74.8125
     xOffset: 0
-    yOffset: 0
+    yOffset: 62
     xAdvance: 18.1875
     scale: 1
   - id: 33
@@ -1059,9 +1059,9 @@ Material:
     - _OutlineWidth: 0
     - _PerspectiveFilter: 0.875
     - _Reflectivity: 10
-    - _ScaleRatioA: 1
-    - _ScaleRatioB: 1
-    - _ScaleRatioC: 1
+    - _ScaleRatioA: 0.8333333
+    - _ScaleRatioB: 0.6770833
+    - _ScaleRatioC: 0.6770833
     - _ScaleX: 1
     - _ScaleY: 1
     - _ShaderFlags: 0
