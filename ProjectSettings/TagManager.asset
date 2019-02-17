@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - EnergyPickup
   - GameUI
+  - BlackHole
   layers:
   - Default
   - TransparentFX

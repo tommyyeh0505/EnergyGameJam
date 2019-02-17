@@ -984,7 +984,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &993459671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1621,6 +1621,8 @@ MonoBehaviour:
     type: 3}
   prefabRedSun: {fileID: 3229285319116930357, guid: 0e034dd94d2433d468e32be5d1edab76,
     type: 3}
+  prefabBlackHole: {fileID: 5092855944826870168, guid: ca3826e21b4d6844995efb50cd665b86,
+    type: 3}
   minDistanceBetweenScenery: 25
   minTerrainPerTile: 1
   maxTerrainPerTile: 2
@@ -1660,7 +1662,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 2ba0adf7f6d43481abc12578cb524053, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 35d12f56256854d648b4d1fa46951797, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -2273,6 +2275,11 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 5.12
       objectReference: {fileID: 0}
+    - target: {fileID: 3614679745085772535, guid: 276304badd00ffa42878f0cb18fab489,
+        type: 3}
+      propertyPath: speedBoostForceMagnitude
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2292917158644954839, guid: 276304badd00ffa42878f0cb18fab489,
         type: 3}
       propertyPath: energy
@@ -2287,11 +2294,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Radius
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3614679745085772535, guid: 276304badd00ffa42878f0cb18fab489,
-        type: 3}
-      propertyPath: speedBoostForceMagnitude
-      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 276304badd00ffa42878f0cb18fab489, type: 3}
