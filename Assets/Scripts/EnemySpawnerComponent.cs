@@ -46,6 +46,7 @@ public class EnemySpawnerComponent : MonoBehaviour
         CameraWidth = Camera.main.aspect * OrthSize;
         SpawnBoundaries = new float[4];
         UpdateCamera();
+        nextActionTime = Time.time;
     }
 
     private void UpdateCamera()
@@ -56,11 +57,10 @@ public class EnemySpawnerComponent : MonoBehaviour
         //Debug.Log("Height: " + CameraHeight);
         //Debug.Log("Width: " + CameraWidth);
         SpawnBoundaries[0] = CameraPos.y + OrthSize + SpawnBoundaryPadding;
-        SpawnBoundaries[1] = 0f - OrthSize - SpawnBoundaryPadding;
-        SpawnBoundaries[2] = 0f - (OrthSize * Camera.main.aspect) - SpawnBoundaryPadding;
+        SpawnBoundaries[1] = CameraPos.y - OrthSize - SpawnBoundaryPadding;
+        SpawnBoundaries[2] = CameraPos.x - (OrthSize * Camera.main.aspect) - SpawnBoundaryPadding;
         SpawnBoundaries[3] = CameraPos.x + (OrthSize * Camera.main.aspect) + SpawnBoundaryPadding;
         Debug.DrawLine(new Vector3(SpawnBoundaries[2], SpawnBoundaries[1], 0), new Vector3(SpawnBoundaries[3], SpawnBoundaries[0], 0), Color.white, 10.0f);
-
     }
 
     public int SpawnEnemy(string EnemyType, Vector3 location)
@@ -93,8 +93,7 @@ public class EnemySpawnerComponent : MonoBehaviour
             nextActionTime += period;
             UpdateCamera();
             RandomSpawn();
-        }
-        
+        }        
     }
 
     void DebugDrawColoredRectangle(Vector3 position, float size)
