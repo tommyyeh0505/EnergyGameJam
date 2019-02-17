@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class EnemyShooterAIComponent : EnemyAIComponent
 {
+    [SerializeField] public AudioClip fireAudio;
+    private AudioSource audioSource;
+
     public float tooCloseDistance = 5f;
     public float safeSpace = 10f;
     public float tooFarDistance = 12f;
@@ -21,6 +25,7 @@ public class EnemyShooterAIComponent : EnemyAIComponent
     {
         lastFiredTime = Time.time;
         playerRef = GameObject.FindGameObjectWithTag("Player");
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -92,6 +97,10 @@ public class EnemyShooterAIComponent : EnemyAIComponent
 
             Instantiate(bulletPrefab, transform.position, bulletRotation);
             lastFiredTime = Time.time;
+            if (audioSource)
+            {
+                audioSource.PlayOneShot(fireAudio, 1);
+            }
         }
     }
 }
