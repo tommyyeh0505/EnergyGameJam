@@ -5057,6 +5057,7 @@ MonoBehaviour:
   maxSpeedDecelerationFactor: 0.98
   speedBoostForceMagnitude: 4
   speedBoostDuration: 1
+  thrustDrain: 10
 --- !u!114 &1577079995700776958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5091,7 +5092,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   energy: 100
-  energyGain: 1
+  energyGain: 15
   maxEnergy: 100
   minEnergy: 0
   rechargeThreshold: 25
