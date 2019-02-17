@@ -10,6 +10,9 @@ public class EnemyHealthComponent : MonoBehaviour
     private bool alreadyDead = false;
     public ParticleSystem explosion;
     public float MutualCollisionKillSpeed = 5f;
+    
+    public float cameraShakeDurationOnKill = 0.05f;
+    public float cameraShakeMagnitudeOnKill = 5f;
 
     // Start is called before the first frame update
     void Start()
@@ -69,6 +72,12 @@ public class EnemyHealthComponent : MonoBehaviour
         }
 
         alreadyDead = true;
+
+        CameraMovement camera = Camera.main.GetComponent<CameraMovement>();
+        if (camera)
+        {
+            camera.ShakeCamera(cameraShakeMagnitudeOnKill, cameraShakeDurationOnKill);
+        }
 
         StartCoroutine(DestroyTimer(explosion.duration));
     }

@@ -17,6 +17,7 @@ public class CameraMovement : MonoBehaviour
     public float shakeAmount = 1f;
     public float shakeDuration = 3f;
     private float timeStartShake = 0f;
+    private Coroutine cameraShakeCoroutine;
 
     // Start is called before the first frame update
     void Start()
@@ -46,12 +47,17 @@ public class CameraMovement : MonoBehaviour
         }
     }
 
-    public void ShakeCamera(float duration)
+    public void ShakeCamera(float magnitude, float duration)
     {
-        StartCoroutine(StartCameraShake(duration));
+        if (cameraShakeCoroutine != null)
+        {
+            StopCoroutine(cameraShakeCoroutine);
+        }
+
+        cameraShakeCoroutine = StartCoroutine(StartCameraShake(magnitude, duration));
     }
 
-    IEnumerator StartCameraShake(float duration)
+    IEnumerator StartCameraShake(float magnitude, float duration)
     {
         timeStartShake = Time.time;
 
@@ -61,7 +67,7 @@ public class CameraMovement : MonoBehaviour
             // calculate the offset of the camera
             shakeCameraOffset = new Vector3(Mathf.PerlinNoise(Time.time * shakeFreaquency * completion, 0f) * shakeAmount * completion,
                                             Mathf.PerlinNoise(0f, Time.time * shakeFreaquency * completion) * shakeAmount * completion, -10f);
-            Camera.main.transform.position += shakeCameraOffset;
+            Camera.main.transform.position += shakeCameraOffset * magnitude;
 
             yield return null;
         }

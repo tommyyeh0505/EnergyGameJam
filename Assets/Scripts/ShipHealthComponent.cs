@@ -16,6 +16,7 @@ public class ShipHealthComponent : MonoBehaviour
     public float shieldBounciness = 80f;
 
     public float cameraShakeDuration = 0.5f;
+    public float cameraShakeMagnitude = 1f;
 
     private GameObject shield;
     private bool shieldOn = false;
@@ -91,7 +92,7 @@ public class ShipHealthComponent : MonoBehaviour
         CameraMovement camera = Camera.main.GetComponent<CameraMovement>();
         if (camera)
         {
-            camera.ShakeCamera(cameraShakeDuration);
+            camera.ShakeCamera(cameraShakeMagnitude, cameraShakeDuration);
         }
     }
 
