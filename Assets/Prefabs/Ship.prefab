@@ -5043,7 +5043,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c4f52a5273cf8643864eef9b9aca18f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thrust: 300
+  thrust: 500
   maxSpeed: 15
   rotateSpeed: 4
   rotationDragFactor: 0.6

@@ -96,7 +96,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   strength: 5
-  orbitDistance: 3
   effectiveRange: 100
 --- !u!58 &7004998476192512744
 CircleCollider2D:

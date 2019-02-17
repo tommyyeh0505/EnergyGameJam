@@ -49,7 +49,7 @@ public class EnemyHealthComponent : MonoBehaviour
         {
             // TODO: death anim
             explosion.Play();
-            //renderer.color = Color.red;
+            renderer.color = Color.clear;
         }
         Rigidbody2D body = GetComponent<Rigidbody2D>();
         if (body)
@@ -67,6 +67,7 @@ public class EnemyHealthComponent : MonoBehaviour
         }
 
         alreadyDead = true;
+      //  Destroy(gameObject);
 
         StartCoroutine(DestroyTimer());
     }

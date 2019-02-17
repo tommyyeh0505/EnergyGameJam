@@ -42,7 +42,7 @@ public class OrbitalForceComponent : MonoBehaviour
             }
         }
 
-        gravComponent.ApplyGravity(((perpendicular * force.magnitude * orbitalNudgeStrength) + force).normalized * force.magnitude);
+        gravComponent.ApplyGravity(((perpendicular * force.magnitude * orbitalNudgeStrength) + force));
 
         ShipBehaviourScript behavior = gravComponent.GetComponent<ShipBehaviourScript>();
         if (behavior)
