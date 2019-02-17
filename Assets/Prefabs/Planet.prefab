@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 9178110893463130635}
   - component: {fileID: 9178110893463130632}
-  - component: {fileID: 9178110893463130634}
   - component: {fileID: 9178110893463130637}
   - component: {fileID: 7004998476192512744}
   - component: {fileID: 1389095676477904601}
+  - component: {fileID: 300167932166215863}
   m_Layer: 0
   m_Name: Planet
   m_TagString: OccupiesSpace
@@ -72,8 +72,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 8977df0cd48ce472f816e927e8a539e7, type: 3}
-  m_Color: {r: 0.12615699, g: 0.6028138, b: 0.764151, a: 1}
+  m_Sprite: {fileID: 21300000, guid: a5088ba29d68df944a47989890541dcb, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -83,18 +83,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &9178110893463130634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9178110893463130633}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 724618091373d4140a510b6a5f243396, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &9178110893463130637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -125,7 +113,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.43
 --- !u!50 &1389095676477904601
 Rigidbody2D:
   serializedVersion: 4
@@ -147,3 +135,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &300167932166215863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9178110893463130633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab17147bf498c2945b9d81959e129086, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  orbitalDistance: 8
+  orbitalNudgeStrength: 2

@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collision2D))]
 public class EnemyHealthComponent : MonoBehaviour
 {
+    [SerializeField] public GameObject prefabEnergyPickup;
     float destroyedRetainTimer = 4f;
     private bool alreadyDead = false;
     public ParticleSystem explosion;
@@ -36,6 +37,7 @@ public class EnemyHealthComponent : MonoBehaviour
         }
         if (!alreadyDead)
         {
+            Instantiate(prefabEnergyPickup, gameObject.transform.position, Quaternion.identity);
             Die();
         }
     }
