@@ -10,7 +10,7 @@ public class ShipBehaviourScript : MonoBehaviour {
     public float maxSpeed = 30f;
     public float rotateSpeed = 0.1f;   // degrees per second
     public float rotationDragFactor = 0.5f;
-    public float decelerationWeight = 5f;
+    public float decelerationWeight = 2f;
 
     private Vector3 moveDirection = Vector3.zero;
     private Rigidbody2D rgbd2d;
