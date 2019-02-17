@@ -9,6 +9,7 @@ public class ShipHealthComponent : MonoBehaviour
 {
     [SerializeField] public float shieldDrain = 15f;
     ShipEnergyComponent energyComponent;
+    public ParticleSystem explosion;
 
     public float destroyedRetainTimer = 4f;
     public GameObject shieldPrefab;
@@ -19,6 +20,7 @@ public class ShipHealthComponent : MonoBehaviour
 
     void Start()
     {
+        
         energyComponent = GetComponent<ShipEnergyComponent>();
     }
 
@@ -85,7 +87,8 @@ public class ShipHealthComponent : MonoBehaviour
         if (ren)
         {
             // TODO: death anim
-            ren.color = Color.red;
+            explosion.Play();
+            //ren.color = Color.red;
         }
         Rigidbody2D body = GetComponent<Rigidbody2D>();
         if (body)
