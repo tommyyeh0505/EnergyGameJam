@@ -7,6 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(ShipEnergyComponent))]
 [RequireComponent(typeof(CircleCollider2D))]
 [RequireComponent(typeof(PolygonCollider2D))]
+[RequireComponent(typeof(AudioSource))]
 public class ShipHealthComponent : MonoBehaviour
 {
     [SerializeField] public float shieldDrain = 15f;
@@ -27,14 +28,13 @@ public class ShipHealthComponent : MonoBehaviour
     private CircleCollider2D CircleCollider;
     private PolygonCollider2D PolygonCollider;
 
+    [SerializeField] public AudioClip explodeAudio;
 
     void Start()
     {
-        
         energyComponent = GetComponent<ShipEnergyComponent>();
         CircleCollider = GetComponent<CircleCollider2D>();
         PolygonCollider = GetComponent<PolygonCollider2D>();
-
     }
 
     public void ToggleShieldOn()
@@ -52,6 +52,15 @@ public class ShipHealthComponent : MonoBehaviour
             {
                 animator.SetBool("shield", true);
             }
+        }
+    }
+
+    public void KilledEnemy()
+    {
+        ShipBehaviourScript behavior = GetComponent<ShipBehaviourScript>();
+        if (behavior)
+        {
+            behavior.SpeedBoost();
         }
     }
 
@@ -76,6 +85,11 @@ public class ShipHealthComponent : MonoBehaviour
         }
         if (collision.gameObject.tag == "Bullet")
         {
+            if (collision.gameObject.tag == "Enemy")
+            {
+                collision.gameObject.GetComponent<EnemyHealthComponent>().Die();
+                KilledEnemy();
+            }
             Destroy(collision.gameObject);
         }
         if (collision.gameObject.tag == "Enemy")
@@ -86,7 +100,6 @@ public class ShipHealthComponent : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
         if (collision.gameObject.tag == "EnergyPickup")
         {
             return;
@@ -94,18 +107,17 @@ public class ShipHealthComponent : MonoBehaviour
 
         if (shieldOn)
         {
-            //Shouldnt ever run this because trigger2D is bigger and wont call this method.
-            //if (collision.gameObject.tag == "Bullet")
-            //{
-            //    Destroy(collision.gameObject);
-            //} else if (collision.gameObject.tag == "Enemy")
-            //{
-            //    Debug.Log("explode enemy");
-            //    collision.gameObject.GetComponent<EnemyHealthComponent>().Die();
-            //}
-            //else
-            //{
-                //Debug.Log("bounced");
+            if (collision.gameObject.tag == "Bullet")
+            {
+                Destroy(collision.gameObject);
+            } else if (collision.gameObject.tag == "Enemy")
+            {
+                collision.gameObject.GetComponent<EnemyHealthComponent>().Die();
+                KilledEnemy();
+            }
+            else
+            {
+                Debug.Log("bounced");
                 Bounce(collision);
             //}
             //TODO: maybe kill thursters for 1 second after bounce for a disorientating effect
@@ -146,6 +158,11 @@ public class ShipHealthComponent : MonoBehaviour
             StartCoroutine(PlayExplosion());
            // Debug.Log("after exp");
             ren.color = Color.red;
+        }
+        AudioSource audioSource = GetComponent<AudioSource>();
+        if (audioSource)
+        {
+            audioSource.PlayOneShot(explodeAudio, 1);
         }
         Rigidbody2D body = GetComponent<Rigidbody2D>();
         if (body)

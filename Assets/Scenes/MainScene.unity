@@ -2332,5 +2332,10 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3614679745085772535, guid: 276304badd00ffa42878f0cb18fab489,
+        type: 3}
+      propertyPath: speedBoostForceMagnitude
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 276304badd00ffa42878f0cb18fab489, type: 3}
