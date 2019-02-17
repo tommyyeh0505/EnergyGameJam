@@ -8,6 +8,7 @@ public class EnemyHealthComponent : MonoBehaviour
 {
     float destroyedRetainTimer = 4f;
     private bool alreadyDead = false;
+    public ParticleSystem explosion;
 
     // Start is called before the first frame update
     void Start()
@@ -45,7 +46,8 @@ public class EnemyHealthComponent : MonoBehaviour
         if (renderer)
         {
             // TODO: death anim
-            renderer.color = Color.red;
+            explosion.Play();
+            //renderer.color = Color.red;
         }
         Rigidbody2D body = GetComponent<Rigidbody2D>();
         if (body)

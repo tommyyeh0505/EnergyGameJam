@@ -9,6 +9,7 @@ public class ShipHealthComponent : MonoBehaviour
 {
     [SerializeField] public float shieldDrain = 15f;
     ShipEnergyComponent energyComponent;
+    public ParticleSystem explosion;
 
     public float destroyedRetainTimer = 4f;
     public GameObject shieldPrefab;
@@ -19,6 +20,7 @@ public class ShipHealthComponent : MonoBehaviour
 
     void Start()
     {
+        
         energyComponent = GetComponent<ShipEnergyComponent>();
     }
 
@@ -53,6 +55,11 @@ public class ShipHealthComponent : MonoBehaviour
     {
         Debug.Log("Collided with " + collision.gameObject.tag);
 
+        if (collision.gameObject.tag == "EnergyPickup")
+        {
+            return;
+        }
+
         if (shieldOn)
         {
             Bounce(collision);
@@ -82,7 +89,8 @@ public class ShipHealthComponent : MonoBehaviour
         if (ren)
         {
             // TODO: death anim
-            ren.color = Color.red;
+            explosion.Play();
+            //ren.color = Color.red;
         }
         Rigidbody2D body = GetComponent<Rigidbody2D>();
         if (body)
@@ -96,6 +104,8 @@ public class ShipHealthComponent : MonoBehaviour
     {
         yield return new WaitForSeconds(destroyedRetainTimer);
         Destroy(gameObject);
+        Camera.main.GetComponent<GameOver>().SetGameOverScreen();
+
     }
 
     public bool IsShieldOn()
