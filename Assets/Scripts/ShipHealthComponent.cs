@@ -201,7 +201,13 @@ public class ShipHealthComponent : MonoBehaviour
         {
             animator.SetTrigger("dying");
         }
-        GameObject.FindGameObjectsWithTag("GameUI")[0].SetActive(false);
+
+        GameObject[] UIs = GameObject.FindGameObjectsWithTag("GameUI");
+        if (UIs.Length > 0)
+        {
+            UIs[0].SetActive(false);
+        }
+
         StartCoroutine(DestroyTimer());
     }
 
