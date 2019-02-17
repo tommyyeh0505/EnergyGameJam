@@ -72,7 +72,7 @@ public class ShipBehaviourScript : MonoBehaviour {
         if (currentlyOrbiting)
         {
             Vector2 difference = orbitRef.transform.position - transform.position;
-            if (orbitRef.orbitalDistance < difference.magnitude)
+            if (orbitRef.IsInOrbit(difference.magnitude))
             {
                 currentlyOrbiting = false;
             }       
