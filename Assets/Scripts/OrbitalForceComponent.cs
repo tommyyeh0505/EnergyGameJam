@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(GravityWellComponentScript))]
+[RequireComponent(typeof(CircleCollider2D))]
 public class OrbitalForceComponent : MonoBehaviour
 {
     public float orbitalDistance = 5.0f;

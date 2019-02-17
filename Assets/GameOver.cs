@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class GameOver : MonoBehaviour
 {
-    [SerializeField] TMPro.TMP_Text Score;
-    [SerializeField] TMPro.TMP_Text HighScore;
-    [SerializeField] GameObject GameOverScreen;
+    [SerializeField] public TMPro.TMP_Text Score;
+    [SerializeField] public TMPro.TMP_Text HighScore;
+    [SerializeField] public GameObject GameOverScreen;
     private float currentTime;
     private bool record;
     private float hi;
