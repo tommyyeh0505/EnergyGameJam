@@ -15,7 +15,6 @@ public class GravityFieldScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     public void RegisterAffected(GravityComponentScript toRegister)
