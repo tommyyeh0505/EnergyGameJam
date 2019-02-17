@@ -10,6 +10,8 @@ public class ShipBehaviourScript : MonoBehaviour {
     public float maxSpeed = 30f;
     public float rotateSpeed = 0.1f;   // degrees per second
     public float rotationDragFactor = 0.5f;
+    public float decelerationWeight = 5f;
+
     private Vector3 moveDirection = Vector3.zero;
     private Rigidbody2D rgbd2d;
     private ShipEnergyComponent energyComponent;
@@ -40,7 +42,15 @@ public class ShipBehaviourScript : MonoBehaviour {
             moveDirection = new Vector3(0, Mathf.Max(0.0f, Input.GetAxis("Vertical")), 0);
             moveDirection = transform.TransformDirection(moveDirection);
 
-            rgbd2d.AddForce(moveDirection * thrust * Time.deltaTime);
+            Vector2 force = moveDirection * thrust;
+            Vector2 projection = Vector3.Project(force, rgbd2d.velocity);
+            float degree = Vector2.SignedAngle(projection, rgbd2d.velocity);
+            if (Mathf.Abs(Vector2.SignedAngle(projection, rgbd2d.velocity)) > float.Epsilon + 1)
+            {
+                force = force + projection.normalized * decelerationWeight * force.magnitude;
+            }
+
+            rgbd2d.AddForce(force * Time.deltaTime);
             if (rgbd2d.velocity.magnitude > maxSpeed)
             {
                 rgbd2d.velocity = rgbd2d.velocity.normalized * maxSpeed;
