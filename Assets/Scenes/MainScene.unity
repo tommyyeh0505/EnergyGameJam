@@ -1690,7 +1690,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Enemies:
   - {fileID: 468639093506378017, guid: 338e11c30a03c574da8239c2bfbb15b4, type: 3}
-  - {fileID: 6268593940161102766, guid: d4e44d0ae856c634682ed288166a9d55, type: 3}
+  - {fileID: 5209280408464773150, guid: e00537f18fdbf9c4b90615d4786cebd1, type: 3}
   EnemiesPerSecond: 2
   MaxEnemiesOnMap: 15
   EnemySpawnGrowthFactor: 0
