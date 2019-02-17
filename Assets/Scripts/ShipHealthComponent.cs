@@ -124,6 +124,12 @@ public class ShipHealthComponent : MonoBehaviour
             firing.enabled = false;
         }
 
+        Animator animator = GetComponent<Animator>();
+        if (animator)
+        {
+            animator.SetTrigger("dying");
+        }
+
         StartCoroutine(DestroyTimer());
     }
 
