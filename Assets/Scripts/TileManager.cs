@@ -6,11 +6,32 @@ using TileIndex = System.Tuple<int, int>;
 
 public class TileManager : MonoBehaviour
 {
-    [SerializeField] public GameObject prefabTile;
+    [SerializeField] public GameObject prefabMars;
+    [SerializeField] public GameObject prefabMercury;
+    [SerializeField] public GameObject prefabNeptune;
+    [SerializeField] public GameObject prefabOrange;
+    [SerializeField] public GameObject prefabUranus;
+    [SerializeField] public GameObject prefabWorstPlanet;
+    [SerializeField] public GameObject prefabRedSun;
+    [SerializeField] public float minDistanceBetweenScenery;
+    [SerializeField] public int minTerrainPerTile;
+    [SerializeField] public int maxTerrainPerTile;
     private static readonly float TILE_WIDTH = 50.0f;
     private static readonly float TILE_HEIGHT = 30.0f;
-    private Dictionary<TileIndex, TileBehaviourComponent> tiles = new Dictionary<TileIndex, TileBehaviourComponent>();
+    private Dictionary<TileIndex, List<GameObject>> tiles = new Dictionary<TileIndex, List<GameObject>>();
+    private List<GameObject> prefabs = new List<GameObject>();
     private GameObject ship;
+
+    private void Awake()
+    {
+        prefabs.Add(prefabMars);
+        prefabs.Add(prefabMercury);
+        prefabs.Add(prefabNeptune);
+        prefabs.Add(prefabOrange);
+        prefabs.Add(prefabUranus);
+        prefabs.Add(prefabWorstPlanet);
+        prefabs.Add(prefabRedSun);
+    }
 
     void Start()
     {
@@ -30,6 +51,24 @@ public class TileManager : MonoBehaviour
             Vector3 shipPos = ship.transform.position;
             TileIndex tileIndex = GetTileIndex(shipPos.x, shipPos.y);
             GenerateSurroundingTiles(tileIndex);
+        }
+
+        if (Input.GetButtonDown("reset"))
+        {
+            foreach (List<GameObject> terrainList in tiles.Values)
+            {
+                foreach (GameObject terrain in terrainList)
+                {
+                    Destroy(terrain);
+                }
+            }
+            tiles.Clear();
+            if (ship)
+            {
+                Vector3 shipPos = ship.transform.position;
+                TileIndex tileIndex = GetTileIndex(shipPos.x, shipPos.y);
+                GenerateSurroundingTiles(tileIndex);
+            }
         }
     }
 
@@ -57,14 +96,113 @@ public class TileManager : MonoBehaviour
     {
         if (!tiles.ContainsKey(index))
         {
-            Vector2 pos = new Vector2(index.Item1 * TILE_WIDTH + TILE_WIDTH / 2, index.Item2 * TILE_HEIGHT + TILE_HEIGHT / 2);
-            GameObject tile = Instantiate(prefabTile, pos, Quaternion.identity);
-            TileBehaviourComponent tileBehaviour = tile.GetComponent<TileBehaviourComponent>();
-            if (tileBehaviour)
+            tiles.Add(index, GenerateTileTerrain(index, random));
+        }
+    }
+
+    private List<GameObject> GenerateTileTerrain(TileIndex tile, System.Random random)
+    {
+        List<GameObject> tileTerrain = new List<GameObject>();
+        int numScenery = random.Next(minTerrainPerTile, maxTerrainPerTile + 1);
+        for (int i = 0; i < numScenery; i++)
+        {
+            GameObject terrain = PlaceTerrain(tile, random);
+            if (terrain)
             {
-                tileBehaviour.GenerateTerrain(random, TILE_WIDTH, TILE_HEIGHT);
-                tiles.Add(index, tileBehaviour);
+                tileTerrain.Add(terrain);
             }
         }
+        return tileTerrain;
+    }
+
+    private GameObject PlaceTerrain(TileIndex index, System.Random random)
+    {
+        int maxX = (int)TILE_WIDTH / 2;
+        int maxY = (int)TILE_HEIGHT / 2;
+        Vector2 offset = GenerateRandomOffset(random, maxX, maxY);
+        Vector2 absPos = GetTileCentre(index) + offset;
+
+        List<GameObject> nearbyTerrain = GetTerrainFromSurroundingTiles(index);
+        bool isPosGood = true;
+        int iterations = 0;
+        do
+        {
+            isPosGood = true;
+            iterations += 1;
+            if (iterations > 10)
+            {
+                // if we can't find a place for it after a while, just give up
+                return null;
+            }
+            foreach (GameObject sceneryObject in nearbyTerrain)
+            {
+                if (Vector2.Distance(sceneryObject.transform.position, absPos) < minDistanceBetweenScenery)
+                {
+                    isPosGood = false;
+                }
+            }
+            if (!isPosGood)
+            {
+                offset = GenerateRandomOffset(random, maxX, maxY);
+                absPos = GetTileCentre(index) + offset;
+            }
+        } while (!isPosGood);
+
+        int choice = random.Next(prefabs.Count);
+        return Instantiate(prefabs[choice], absPos, Quaternion.identity);
+    }
+
+    private Vector2 GenerateRandomOffset(System.Random random, int maxX, int maxY)
+    {
+        bool isXNeg = false;
+        if (random.Next(2) == 1)
+        {
+            isXNeg = true;
+
+        }
+
+        bool isYNeg = false;
+        if (random.Next(2) == 1)
+        {
+            isYNeg = true;
+        }
+
+        int xOffset = random.Next(maxX);
+        int yOffset = random.Next(maxY);
+        if (isXNeg)
+        {
+            xOffset *= -1;
+        }
+        if (isYNeg)
+        {
+            yOffset *= -1;
+        }
+
+        return new Vector2(xOffset, yOffset);
+    }
+
+    private Vector2 GetTileCentre(TileIndex index)
+    {
+        return new Vector2(index.Item1 * TILE_WIDTH + TILE_WIDTH / 2, index.Item2 * TILE_HEIGHT + TILE_HEIGHT / 2);
+    }
+
+    private List<GameObject> GetTerrainFromSurroundingTiles(TileIndex index)
+    {
+        List<GameObject> terrain = new List<GameObject>();
+        for (int i = -1; i <= 1; i++)
+        {
+            for (int j = -1; j <= 1; j++)
+            {
+                TileIndex neighbour = new TileIndex(index.Item1 + i, index.Item2 + j);
+                if (tiles.ContainsKey(neighbour))
+                {
+                    foreach (GameObject neighbouringTerrain in tiles[neighbour])
+                    {
+                        terrain.Add(neighbouringTerrain);
+                    }
+                }
+            }
+        }
+        return terrain;
     }
 }
