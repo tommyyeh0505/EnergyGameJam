@@ -55,21 +55,23 @@ public class ShipHealthComponent : MonoBehaviour
     {
         Debug.Log("Collided with " + collision.gameObject.tag);
 
-        if (true) //collision.gameObject.tag != "OccupiesSpace") // why don't we want to die if we hit something that occupies space? 
+        if (collision.gameObject.tag == "EnergyPickup")
         {
-            if (shieldOn)
-            {
-                Bounce(collision);
-                //TODO: maybe kill thursters for 1 second after bounce for a disorientating effect
-            }
-            else
-            {
-                if (collision.gameObject.tag != "PlayerBullet")
-                {
-                    Die();
-                }
-            }
+            return;
         }
+
+        if (shieldOn)
+        {
+            Bounce(collision);
+            //TODO: maybe kill thursters for 1 second after bounce for a disorientating effect
+        }
+        else
+        {
+            if (collision.gameObject.tag != "PlayerBullet")
+            {
+                Die();
+            }
+        } 
     }
 
     private void Bounce(Collision2D collision)
@@ -102,6 +104,8 @@ public class ShipHealthComponent : MonoBehaviour
     {
         yield return new WaitForSeconds(destroyedRetainTimer);
         Destroy(gameObject);
+        Camera.main.GetComponent<GameOver>().SetGameOverScreen();
+
     }
 
     public bool IsShieldOn()

@@ -24,12 +24,16 @@ public class EnemyHealthComponent : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.tag == "Enemy")
+        {
+            Debug.Log("enemy enemy");
+            return;
+        }
         ShipHealthComponent shipHealth = collision.gameObject.GetComponent<ShipHealthComponent>();
         if (shipHealth && !shipHealth.IsShieldOn())
         {
             return;
         }
-
         if (!alreadyDead)
         {
             Die();
