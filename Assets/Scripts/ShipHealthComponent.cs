@@ -53,6 +53,11 @@ public class ShipHealthComponent : MonoBehaviour
     {
         Debug.Log("Collided with " + collision.gameObject.tag);
 
+        if (collision.gameObject.tag == "EnergyPickup")
+        {
+            return;
+        }
+
         if (shieldOn)
         {
             Bounce(collision);
