@@ -121,4 +121,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   energyGain: 10
   attractDistance: 50
-  attractSpeed: 50
+  attractSpeed: 30

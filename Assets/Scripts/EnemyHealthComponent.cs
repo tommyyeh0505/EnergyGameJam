@@ -9,6 +9,7 @@ public class EnemyHealthComponent : MonoBehaviour
     [SerializeField] public GameObject prefabEnergyPickup;
     private bool alreadyDead = false;
     public ParticleSystem explosion;
+    public float MutualCollisionKillSpeed = 5f;
 
     // Start is called before the first frame update
     void Start()
@@ -26,8 +27,10 @@ public class EnemyHealthComponent : MonoBehaviour
     {
         if (collision.gameObject.tag == "Enemy")
         {
-            Debug.Log("enemy enemy");
-            return;
+            if (collision.relativeVelocity.magnitude < MutualCollisionKillSpeed)
+            {
+                return;
+            }
         }
         ShipHealthComponent shipHealth = collision.gameObject.GetComponent<ShipHealthComponent>();
         if (shipHealth && !shipHealth.IsShieldOn())
