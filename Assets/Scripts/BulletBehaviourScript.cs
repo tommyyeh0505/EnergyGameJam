@@ -27,7 +27,6 @@ public class BulletBehaviourScript : MonoBehaviour
     {
         if (col.gameObject.tag == "Player" && hurtsPlayer)
         {
-            return;
         }
         if (col.gameObject.tag == "Enemy" && hurtsEnemies)
         {

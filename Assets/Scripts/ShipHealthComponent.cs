@@ -41,6 +41,7 @@ public class ShipHealthComponent : MonoBehaviour
         if (energyComponent && energyComponent.HasEnergyRemaining(0))
         {
             shieldOn = true;
+            Debug.Log("CircleCollider Active");
             PolygonCollider.gameObject.SetActive(false);
             CircleCollider.gameObject.SetActive(true);
             shield = Instantiate(shieldPrefab, transform.position, Quaternion.identity);
@@ -56,6 +57,7 @@ public class ShipHealthComponent : MonoBehaviour
 
     public void ToggleShieldOff()
     {
+        Debug.Log("PolygonCollider Active");
         CircleCollider.gameObject.SetActive(false);
         PolygonCollider.gameObject.SetActive(true);
         shieldOn = false;
@@ -78,7 +80,10 @@ public class ShipHealthComponent : MonoBehaviour
 
         if (shieldOn)
         {
-            if (collision.gameObject.tag != "Enemy")
+            if (collision.gameObject.tag == "Bullet" || collision.gameObject.tag == "Enemy")
+            {
+                Destroy(collision.gameObject);
+            } else
             {
                 Bounce(collision);
             }
