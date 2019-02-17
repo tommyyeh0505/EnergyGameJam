@@ -6,7 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(ShipEnergyComponent))]
 public class ShipBehaviourScript : MonoBehaviour {
 
-	public float thrust = 300f;
+    public ParticleSystem thruster, thruster2;
+    public float thrust = 300f;
     public float maxSpeed = 30f;
     public float rotateSpeed = 0.1f;   // degrees per second
     public float rotationDragFactor = 0.5f;
@@ -37,6 +38,8 @@ public class ShipBehaviourScript : MonoBehaviour {
         orientation = Quaternion.identity;
         currentDirection = Quaternion.identity;
         alreadyDead = false;
+        thruster.Pause();
+        thruster2.Pause();
 	}
 
     void Update()
@@ -67,6 +70,18 @@ public class ShipBehaviourScript : MonoBehaviour {
                 energyComponent.ReduceEnergy(thrustDrain * Time.deltaTime);
             }
 
+            if (Input.GetButtonDown("Vertical"))
+            {
+                thruster.Play();
+                thruster2.Play();
+            }
+
+            if (Input.GetButtonUp("Vertical"))
+            {
+                thruster.Stop();
+                thruster2.Stop();
+            }
+
             if (Input.GetButtonDown("reset"))
             {
                 transform.position = Vector3.zero;
@@ -92,6 +107,8 @@ public class ShipBehaviourScript : MonoBehaviour {
         velocity = rgbd2d.velocity;
 
         transform.rotation = orientation * currentDirection;
+
+
     }
 
     public void StartOrbit(bool clockWise, OrbitalForceComponent orbital)
