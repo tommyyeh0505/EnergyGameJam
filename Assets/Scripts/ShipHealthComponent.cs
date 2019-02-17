@@ -85,12 +85,14 @@ public class ShipHealthComponent : MonoBehaviour
 
     private void Die()
     {
+        Debug.Log("DIE");
         SpriteRenderer ren = GetComponent<SpriteRenderer>();
         if (ren)
         {
             // TODO: death anim
-            explosion.Play();
-            //ren.color = Color.red;
+            StartCoroutine(PlayExplosion());
+            Debug.Log("after exp");
+            ren.color = Color.red;
         }
         Rigidbody2D body = GetComponent<Rigidbody2D>();
         if (body)
@@ -105,6 +107,14 @@ public class ShipHealthComponent : MonoBehaviour
         yield return new WaitForSeconds(destroyedRetainTimer);
         Destroy(gameObject);
         Camera.main.GetComponent<GameOver>().SetGameOverScreen();
+
+    }
+
+    private IEnumerator PlayExplosion()
+    {
+        yield return new WaitForSeconds(0);
+        explosion.Play();
+
 
     }
 
