@@ -72,6 +72,7 @@ public class ShipHealthComponent : MonoBehaviour
         {
             if (collision.gameObject.tag != "PlayerBullet")
             {
+                Bounce(collision);
                 Die();
             }
         } 
@@ -102,6 +103,18 @@ public class ShipHealthComponent : MonoBehaviour
         {
             body.Sleep();
         }
+        ShipBehaviourScript behavior = GetComponent<ShipBehaviourScript>();
+        if (behavior)
+        {
+            behavior.Die();
+        }
+
+        ShipGunComponent firing = GetComponent<ShipGunComponent>();
+        if (firing)
+        {
+            firing.enabled = false;
+        }
+
         StartCoroutine(DestroyTimer());
     }
 
