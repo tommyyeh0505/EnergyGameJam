@@ -123,6 +123,11 @@ public class TileManager : MonoBehaviour
         Vector2 absPos = GetTileCentre(index) + offset;
 
         List<GameObject> nearbyTerrain = GetTerrainFromSurroundingTiles(index);
+        if (ship)
+        {
+            nearbyTerrain.Add(ship);
+        }
+
         bool isPosGood = true;
         int iterations = 0;
         do
