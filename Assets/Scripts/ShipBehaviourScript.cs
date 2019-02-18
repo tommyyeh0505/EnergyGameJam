@@ -6,7 +6,6 @@ using UnityEngine;
 [RequireComponent(typeof(ShipEnergyComponent))]
 public class ShipBehaviourScript : MonoBehaviour {
 
-    public ParticleSystem thruster, thruster2;
     public float thrust = 300f;
     public float maxSpeed = 30f;
     public float rotateSpeed = 0.1f;   // degrees per second
@@ -38,8 +37,6 @@ public class ShipBehaviourScript : MonoBehaviour {
         orientation = Quaternion.identity;
         currentDirection = Quaternion.identity;
         alreadyDead = false;
-        thruster.Pause();
-        thruster2.Pause();
 	}
 
     void Update()
@@ -68,18 +65,6 @@ public class ShipBehaviourScript : MonoBehaviour {
             if (energyComponent && Input.GetButton("Vertical"))
             {
                 energyComponent.ReduceEnergy(thrustDrain * Time.deltaTime);
-            }
-
-            if (Input.GetButtonDown("Vertical"))
-            {
-                thruster.Play();
-                thruster2.Play();
-            }
-
-            if (Input.GetButtonUp("Vertical"))
-            {
-                thruster.Stop();
-                thruster2.Stop();
             }
 
             if (Input.GetButtonDown("reset"))
