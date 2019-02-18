@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5092855944826870166}
   - component: {fileID: 5092855944826870169}
   m_Layer: 0
-  m_Name: BlackHole
+  m_Name: blackhole
   m_TagString: BlackHole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   strength: 7
-  effectiveRange: 100
+  effectiveRange: 50
 --- !u!58 &5092855944826870166
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2831939858632450514}
   - component: {fileID: 7022020620135570461}
   m_Layer: 0
-  m_Name: Planet (1)
+  m_Name: orangee
   m_TagString: OccupiesSpace
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -95,8 +95,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e07e5a7e38dbe4242b3b2f68a88d7689, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  strength: 5
-  effectiveRange: 100
+  strength: 3
+  effectiveRange: 50
 --- !u!50 &3467899534419079100
 Rigidbody2D:
   serializedVersion: 4
@@ -131,8 +131,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orbitalDistance: 5
-  orbitalNudgeStrength: 1
-  orbitalNetForceFactor: 1
+  orbitalNudgeStrength: 2
+  orbitalNetForceFactor: 2
 --- !u!58 &7022020620135570461
 CircleCollider2D:
   m_ObjectHideFlags: 0
