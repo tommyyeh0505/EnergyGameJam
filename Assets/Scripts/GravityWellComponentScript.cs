@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
+using System.Collections;
 public class GravityWellComponentScript : MonoBehaviour
 {
     [SerializeField] public float strength = 5f;
@@ -38,5 +38,16 @@ public class GravityWellComponentScript : MonoBehaviour
                 }
             }
         }
+    }
+
+    public Vector2 FindForce(Vector2 atLocation)
+    {
+        Vector2 difference = (Vector2)this.transform.position - atLocation;
+        float distance = difference.magnitude;
+        float distanceFactor = difference.sqrMagnitude / distance;
+        Vector2 dir = difference.normalized;
+        Vector2 force = dir * strength / distanceFactor;
+
+        return force;
     }
 }

@@ -21,6 +21,7 @@ public class ShipHealthComponent : MonoBehaviour
     public float cameraShakeDuration = 0.5f;
     public float cameraShakeMagnitude = 1f;
 
+    private bool gravity;
     private GameObject shield;
     private bool shieldOn = false;
     private bool dead = false;
@@ -41,13 +42,12 @@ public class ShipHealthComponent : MonoBehaviour
     {
         if (energyComponent && energyComponent.HasEnergyRemaining(0))
         {
+            Animator animator = GetComponent<Animator>();
             shieldOn = true;
             Debug.Log("CircleCollider Active");
             CircleCollider.enabled = true;
             shield = Instantiate(shieldPrefab, transform.position, Quaternion.identity);
             shield.transform.parent = gameObject.transform;
-
-            Animator animator = GetComponent<Animator>();
             if (animator)
             {
                 animator.SetBool("shield", true);
@@ -103,6 +103,11 @@ public class ShipHealthComponent : MonoBehaviour
         if (collision.gameObject.tag == "EnergyPickup")
         {
             return;
+        }
+
+
+        if (collision.gameObject.tag == "BlackHole") {
+            Die();
         }
 
         if (shieldOn)
@@ -196,7 +201,13 @@ public class ShipHealthComponent : MonoBehaviour
         {
             animator.SetTrigger("dying");
         }
-        GameObject.FindGameObjectsWithTag("GameUI")[0].SetActive(false);
+
+        GameObject[] UIs = GameObject.FindGameObjectsWithTag("GameUI");
+        if (UIs.Length > 0)
+        {
+            UIs[0].SetActive(false);
+        }
+
         StartCoroutine(DestroyTimer());
     }
 

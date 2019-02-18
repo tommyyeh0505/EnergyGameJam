@@ -13,6 +13,7 @@ public class TileManager : MonoBehaviour
     [SerializeField] public GameObject prefabUranus;
     [SerializeField] public GameObject prefabWorstPlanet;
     [SerializeField] public GameObject prefabRedSun;
+    [SerializeField] public GameObject prefabBlackHole;
     [SerializeField] public float minDistanceBetweenScenery;
     [SerializeField] public int minTerrainPerTile;
     [SerializeField] public int maxTerrainPerTile;
@@ -31,6 +32,7 @@ public class TileManager : MonoBehaviour
         prefabs.Add(prefabUranus);
         prefabs.Add(prefabWorstPlanet);
         prefabs.Add(prefabRedSun);
+        prefabs.Add(prefabBlackHole);
     }
 
     void Start()
@@ -117,9 +119,7 @@ public class TileManager : MonoBehaviour
 
     private GameObject PlaceTerrain(TileIndex index, System.Random random)
     {
-        int maxX = (int)TILE_WIDTH / 2;
-        int maxY = (int)TILE_HEIGHT / 2;
-        Vector2 offset = GenerateRandomOffset(random, maxX, maxY);
+        Vector2 offset = GenerateRandomOffset(random);
         Vector2 absPos = GetTileCentre(index) + offset;
 
         List<GameObject> nearbyTerrain = GetTerrainFromSurroundingTiles(index);
@@ -162,7 +162,7 @@ public class TileManager : MonoBehaviour
             }
             if (!isPosGood)
             {
-                offset = GenerateRandomOffset(random, maxX, maxY);
+                offset = GenerateRandomOffset(random);
                 absPos = GetTileCentre(index) + offset;
             }
         } while (!isPosGood);
@@ -171,32 +171,10 @@ public class TileManager : MonoBehaviour
         return Instantiate(planetToSpawn, absPos, Quaternion.identity);
     }
 
-    private Vector2 GenerateRandomOffset(System.Random random, int maxX, int maxY)
+    private Vector2 GenerateRandomOffset(System.Random random)
     {
-        bool isXNeg = false;
-        if (random.Next(2) == 1)
-        {
-            isXNeg = true;
-
-        }
-
-        bool isYNeg = false;
-        if (random.Next(2) == 1)
-        {
-            isYNeg = true;
-        }
-
-        int xOffset = random.Next(maxX);
-        int yOffset = random.Next(maxY);
-        if (isXNeg)
-        {
-            xOffset *= -1;
-        }
-        if (isYNeg)
-        {
-            yOffset *= -1;
-        }
-
+        int xOffset = random.Next((int)TILE_WIDTH) - (int)(TILE_WIDTH / 2);
+        int yOffset = random.Next((int)TILE_HEIGHT) - (int)(TILE_HEIGHT / 2);
         return new Vector2(xOffset, yOffset);
     }
 
